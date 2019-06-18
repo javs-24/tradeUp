@@ -1,13 +1,14 @@
 import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, REQUEST_PRODUCTS_FAILURE, ADD_TO_CART, SUBTRACT_FROM_CART, PROCEED_TO_CHECKOUT, EXIT_CHECKOUT, ACCEPT_PURCHASE, REQUEST_PURCHASE } from '../constants/actionTypes';
 
 const initialState = {
-  products: [{name: 'dummy'}, { name: 'shoe'}],
+  products: [{ name: 'dummy' }, { name: 'shoe' }],
   totalItemsInCart: 0,
   fetchProductsStatus: '',
   fetchProductsError: '',
   cart: {},
   currentCategory: '',
   onCheckoutPage: false,
+  onAddItemPage: false,
   sendPurchaseStatus: '',
   sendPurchaseError: '',
 }
