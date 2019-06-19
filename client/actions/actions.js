@@ -1,79 +1,100 @@
-import * as types from '../constants/actionTypes';
+import * as types from "../constants/actionTypes";
 
 export const requestProducts = () => ({
-  type: types.REQUEST_PRODUCTS,
-})
+  type: types.REQUEST_PRODUCTS
+});
 
-export const receiveProducts = (json) => ({
+export const receiveProducts = json => ({
   type: types.RECEIVE_PRODUCTS,
-  payload: json,
-})
+  payload: json
+});
 
 /**
  * Dispatch this in case of receiving invalid data or the request fails
  * @param {*} err error object
  */
-export const requestProductsFailure = (err) => ({
+export const requestProductsFailure = err => ({
   type: types.REQUEST_PRODUCTS_FAILURE,
-  payload: err,
-})
+  payload: err
+});
 
 export const fetchProducts = () => dispatch => {
-  console.log('fetchProducts');
+  console.log("fetchProducts");
   dispatch(requestProducts());
-  return fetch('/api/products')
+  return fetch("/api/products")
     .then(res => res.json())
     .then(res => {
-      if (!isValidProducts(res)) throw new Error('something went wrong')
-      return dispatch(receiveProducts(res))
+      if (!isValidProducts(res)) throw new Error("something went wrong");
+      return dispatch(receiveProducts(res));
     })
-    .catch(err => dispatch(requestProductsFailure(err)))
-}
+    .catch(err => dispatch(requestProductsFailure(err)));
+};
 
 function isValidProducts(res) {
   return Array.isArray(res);
 }
 
-export const addToCart = (id) => ({
+export const addToCart = id => ({
   type: types.ADD_TO_CART,
-  payload: id,
+  payload: id
 });
 
 export const proceedToCheckout = () => ({
-  type: types.PROCEED_TO_CHECKOUT,
+  type: types.PROCEED_TO_CHECKOUT
 });
 
 export const exitCheckout = () => ({
-  type: types.EXIT_CHECKOUT,
+  type: types.EXIT_CHECKOUT
 });
 
-export const sendPurchase = (cart) => dispatch => {
-  console.log('requestPurchase');
+export const sendPurchase = cart => dispatch => {
+  console.log("requestPurchase");
   dispatch(requestProducts());
-  return fetch('/api/purchase', {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(cart), // data can be `string` or {object}!
-      headers:{
-      'Content-Type': 'application/json'
-      },
-    })
+  return fetch("/api/purchase", {
+    method: "POST", // or 'PUT'
+    body: JSON.stringify(cart), // data can be `string` or {object}!
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
     .then(res => res.json())
     .then(res => {
       // if (!isValidProducts(res)) throw new Error('something went wrong')
-      return dispatch(acceptPurchase(res))
+      return dispatch(acceptPurchase(res));
     })
     .catch(err => console.error(err));
-}
+};
 
 export const requestPurchase = () => ({
-  type: types.REQUEST_PURCHASE,
+  type: types.REQUEST_PURCHASE
 });
 
-export const acceptPurchase = (resMsg) => dispatch => {
-  dispatch(fetchProducts())
+export const acceptPurchase = resMsg => dispatch => {
+  dispatch(fetchProducts());
   return dispatch({
     type: types.ACCEPT_PURCHASE,
-    payload: resMsg,
+    payload: resMsg
   });
-}
+};
+export const search_by = banana => ({ type: types.SEARCH_BY, payload: banana });
 
+export const search_byClick = searchBy => dispatch => {
+  return fetch("/api/search/", {
+    method: "POST", // or 'PUT'
+    body: JSON.stringify(searchBy), // data can be `string` or {object}!
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(res => res.json())
+    .then(res => {
+      // if (!isValidProducts(res)) throw new Error('something went wrong')
+      return dispatch(createCategory(res));
+    })
+    .catch(err => console.error(err));
+};
+
+export const createCategory = res => ({
+  type: types.search_byClick,
+  payload: res
+});

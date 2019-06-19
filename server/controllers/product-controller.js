@@ -1,12 +1,12 @@
-const Product = require('../models/product');
+const Product = require("../models/product");
 const productCtrl = {};
 
 /**
-* getAllProducts - returns all products
-* @param req - http.IncomingRequest
-* @param res - http.ServerResponse
-* @param next - Callback Function w signature (err, users)
-*/
+ * getAllProducts - returns all products
+ * @param req - http.IncomingRequest
+ * @param res - http.ServerResponse
+ * @param next - Callback Function w signature (err, users)
+ */
 productCtrl.getAllProducts = (req, res, next) => {
   Product.getAll()
     .then(result => {
@@ -32,7 +32,7 @@ productCtrl.getCategory = (req, res, next) => {
     })
     .catch(err => {
       return next(err);
-    })
+    });
 };
 
 /**
@@ -46,13 +46,12 @@ productCtrl.updateInventory = (req, res, next) => {
   Product.updateInventory(req.body)
     .then(result => {
       res.locals.success = '"Congratulations on your new shoes!"';
-      next()
+      next();
     })
     .catch(err => {
-      return next(err)
-    })
+      return next(err);
+    });
 };
-
 
 /**
 * createNewOrderDetail - creates an order detail for each shoe purchased
@@ -60,9 +59,7 @@ productCtrl.updateInventory = (req, res, next) => {
 * @param req - http.IncomingRequest
 * @param res - http.ServerResponse
 */
-productCtrl.createNewOrderDetail = (req, res, next) => {
-
-};
+productCtrl.createNewOrderDetail = (req, res, next) => {};
 
 /**
 * createNewOrder - creates an aggregated collection of the orders placed
@@ -70,8 +67,8 @@ productCtrl.createNewOrderDetail = (req, res, next) => {
 * @param req - http.IncomingRequest
 * @param res - http.ServerResponse
 */
-productCtrl.createNewOrder = (req, res, next) => {
+productCtrl.createNewOrder = (req, res, next) => {};
 
-};
+
 
 module.exports = productCtrl;

@@ -1,36 +1,56 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, REQUEST_PRODUCTS_FAILURE, ADD_TO_CART, SUBTRACT_FROM_CART, PROCEED_TO_CHECKOUT, EXIT_CHECKOUT, ACCEPT_PURCHASE, REQUEST_PURCHASE } from '../constants/actionTypes';
+import {
+  REQUEST_PRODUCTS,
+  RECEIVE_PRODUCTS,
+  REQUEST_PRODUCTS_FAILURE,
+  SEARCH_BY,
+  SEARCH_BYCLICK,
+  ADD_TO_CART,
+  SUBTRACT_FROM_CART,
+  PROCEED_TO_CHECKOUT,
+  EXIT_CHECKOUT,
+  ACCEPT_PURCHASE,
+  REQUEST_PURCHASE
+} from "../constants/actionTypes";
 
 const initialState = {
-  products: [{name: 'dummy'}, { name: 'shoe'}],
+  products: [{ name: "dummy" }, { name: "shoe" }],
   totalItemsInCart: 0,
-  fetchProductsStatus: '',
-  fetchProductsError: '',
+  fetchProductsStatus: "",
+  fetchProductsError: "",
   cart: {},
-  currentCategory: '',
+  currentCategory: "",
   onCheckoutPage: false,
-  sendPurchaseStatus: '',
-  sendPurchaseError: '',
+  sendPurchaseStatus: "",
+  sendPurchaseError: "",
+  searchBy: ""
 }
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case SEARCH_BY:
+      return {
+        ...state,
+        searchBy: action.payload
+      };
     case REQUEST_PRODUCTS:
-      return { ...state, fetchProductsStatus: 'pending' };
+      return { ...state, fetchProductsStatus: "pending" };
     case RECEIVE_PRODUCTS:
       return {
         ...state,
-        fetchProductsStatus: 'success',
+        fetchProductsStatus: "success",
         products: action.payload
-      }
+      };
     case REQUEST_PRODUCTS_FAILURE:
       return {
         ...state,
-        fetchProductsStatus: 'failure',
-        fetchProductsError: action.payload,
-      }
+        fetchProductsStatus: "failure",
+        fetchProductsError: action.payload
+      };
     case ADD_TO_CART:
       const SKU = action.payload;
-      const product = Object.values(state.products).filter(p => p.SKU == SKU)[0];
+      const product = Object.values(state.products).filter(
+        p => p.SKU == SKU
+      )[0];
       const inStock = product ? product.inventory : 0;
       const newQuantity = state.cart[SKU] ? state.cart[SKU] + 1 : 1;
       if (newQuantity > inStock) return state;
@@ -38,34 +58,33 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         totalItemsInCart: state.totalItemsInCart + 1,
         cart: Object.assign(state.cart, { [SKU]: newQuantity })
-      }
+      };
     case PROCEED_TO_CHECKOUT:
       return {
         ...state,
-        onCheckoutPage: true,
-      }
+        onCheckoutPage: true
+      };
     case EXIT_CHECKOUT:
       return {
         ...state,
         onCheckoutPage: false,
-        sendPurchaseStatus: '',
-
-      }
+        sendPurchaseStatus: ""
+      };
     case REQUEST_PURCHASE:
       return {
         ...state,
-        sendPurchaseStatus: 'Loading...',
-      }
+        sendPurchaseStatus: "Loading..."
+      };
     case ACCEPT_PURCHASE:
       return {
         ...state,
         sendPurchaseStatus: action.payload,
         totalItemsInCart: 0,
-        cart: {},
-      }
+        cart: {}
+      };
     default:
       return state;
   }
-}
+};
 
 export default productsReducer;
