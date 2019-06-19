@@ -1,23 +1,35 @@
 const express = require("express");
 const router = express.Router();
-const productCtrl = require("../controllers/product-controller");
-
+const itemController = require('../controllers/itemController');
+const favoriteController = require('../controllers/favoriteController');
 // Get all products
-router.get("/products", productCtrl.getAllProducts, (req, res) => {
-  res.status(200).json(res.locals.products);
+router.get('/items', itemController.getAll, (req, res) => {
+  return res.status(200).json(res.locals.items);
 });
 
-// Get all products in specific category
-router.get("/products/:category", productCtrl.getCategory, (req, res) => {
-  res.status(200).json(res.locals.category);
+router.post('/items', itemController.add, (req, res) => {
+  return res.status(200).send('added item !');
 });
 
-// api route for making a purchase
-router.post("/purchase", productCtrl.updateInventory, (req, res) => {
-  res.status(200).send(res.locals.success);
-  //STRETCH FEATURE: authentication for customer
+router.get('/favorites/:user_id', favoriteController.getAll, (req, res) => {
+  return res.status(200).json(res.locals.favoriteItems);
 });
 
+router.post('/favorites', favoriteController.add, (req, res) => {
+  return res.status(200).send('added favorite !');
+});
 
+router.post('/search',  )
+
+//TODO
+// // route for signing up
+// router.get('/signup', productCtrl.getCategory, (req, res) => {
+//   return res.status(200).json(res.locals.category);
+// });
+
+// // api route for logging in
+// router.post('/login', productCtrl.updateInventory, (req, res) => {
+//   return res.status(200).send(res.locals.success);
+// });
 
 module.exports = router;

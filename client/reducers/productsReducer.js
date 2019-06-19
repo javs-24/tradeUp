@@ -22,8 +22,9 @@ const initialState = {
   onCheckoutPage: false,
   sendPurchaseStatus: "",
   sendPurchaseError: "",
-  searchBy: ""
-}
+  searchBy: "",
+  ser: ""
+};
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -31,6 +32,11 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         searchBy: action.payload
+      };
+    case SEARCH_BYCLICK:
+      return {
+        ...state,
+        ser: action.payload
       };
     case REQUEST_PRODUCTS:
       return { ...state, fetchProductsStatus: "pending" };

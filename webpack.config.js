@@ -8,34 +8,34 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'client/dist'),
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ['babel-loader']
       },
       {
         test: /\.css$/,
         exclude: /node_modules/,
         loaders: ['style-loader', 'css-loader']
       }
-    ],
+    ]
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx']
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     contentBase: `${__dirname}/client/dist`,
     hot: true,
     proxy: {
       '/api': NODE_DEV_SERVER_URL,
       '/static': NODE_DEV_SERVER_URL,
-    },
-  },
+      '/purchase': NODE_DEV_SERVER_URL,
+      '/home': NODE_DEV_SERVER_URL
+    }
+  }
 };

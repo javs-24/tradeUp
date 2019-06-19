@@ -1,100 +1,136 @@
 const { Pool } = require('pg');
+require('dotenv').config();
+
+//repopulate the database. this is only used when we need to create new dummy data.
+// NOT PART OF A ROUTE
+// console.log(process.env.PG_PASSWORD);
 
 const pool = new Pool({
-  user: "xqtwqblw",
-  host: "raja.db.elephantsql.com",
-  database: "xqtwqblw",
-  password: "HOn-ooZWg4SonxCxotW_5cBofitQIVAX",
+  user: process.env.PG_USERNAME,
+  host: 'raja.db.elephantsql.com',
+  database: process.env.PG_USERNAME,
+  password: process.env.PG_PASSWORD,
   port: 5432,
-  max: 100,
+  max: 20,
   idleTimeoutMillis: 30000,
-  _connectionTimeoutMillis: 2000,
+  _connectionTimeoutMillis: 2000
 });
 
-const DROP_TABLES = `DROP TABLE "Category", "Product";`;
+const DROP_TABLES = `DROP TABLE IF EXISTS Users, Items, Favorites;`;
 
-const CREATE_CATEGORY = `CREATE TABLE "Category" (
-  "category_id" integer NOT NULL,
-  "category_name" varchar(255) NOT NULL,
-  PRIMARY KEY ("category_id"));`;
+// "user_id" integer NOT NULL,
+const CREATE_USERS = `CREATE TABLE Users (
+  "username" varchar(255) NOT NULL,
+  "password" varchar(255) NOT NULL,
+  "user_id" SERIAL PRIMARY KEY);`;
 
-const INSERT_CATEGORY = `INSERT INTO "Category" ("category_id", "category_name") VALUES 
-  (1, 'Adidas'),
-  (2, 'Nike'),
-  (3, 'Puma'),
-  (4, 'Air Jordan'),
-  (5, 'Off-White');`;
+const INSERT_USERS = `INSERT INTO Users ("username", "password") VALUES 
+  ('bob', 'dole'),
+  ('jacob', 'richards'),
+  ('a', 'b'),
+  ('tarlan', 'gardashov'),
+  ('will', 'sentance');`;
 
-const CREATE_PRODUCT = `CREATE TABLE "Product" (
-  "SKU" serial,
-  "category_id" int4 REFERENCES "Category"("category_id"),
-  "product_name" varchar(255) NOT NULL,
-  "size" int2 NOT NULL,
-  "inventory" int8 NOT NULL,
-  "price" decimal NOT NULL,
-  PRIMARY KEY ("SKU"));`;
+//   "SKU" serial,
+// "inventory" int8 NOT NULL,
+const CREATE_ITEMS = `CREATE TABLE Items (
+  "user_id" int4 REFERENCES Users("user_id"),
+  "item_name" varchar(255) NOT NULL,
+  "description" varchar(255) NOT NULL,
+  "pic_url" varchar(255) NOT NULL,
+  "item_id" SERIAL PRIMARY KEY);`;
 
-const INSERT_PRODUCT = `INSERT INTO "Product" ("category_id", "product_name", "size", "inventory", "price") VALUES 
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Off-White'), '2.0 Distressed Suede-Trimmed Leather Sneakers', 9, 3, 470),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Nike'), '+ Fear of God Nubuck, Suede and Canvas High-Top Sneakers', 9, 2, 190),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Adidas'), 'A.R. Leather Sneakers', 11, 13, 100),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Air Jordan'), 'Jordan 11 Retro Concord (2018)', 12, 18, 259),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Off-White'), 'Leather-Trimmed Shell And Suede Sneakers', 10, 4, 605),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Nike'), 'Air Max 720 Suede-Trimmed Mesh Sneakers', 8, 6, 190),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Puma'), 'Thunder Rive Dr Glacier Sneakers', 7, 8, 120),
-  ((SELECT "category_id" FROM "Category" WHERE "category_name"='Adidas'), 'Yeezy Boost 700 Suede, Leather and Mesh Sneakers', 10, 4, 300);`;
+const INSERT_ITEMS = `INSERT INTO Items ("user_id", "item_name", "description", "pic_url") VALUES 
+  ((SELECT "user_id" FROM Users WHERE "username"='tarlan'), 'dope shirt', 'i love this shirt and you will too', '/public/1.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='will'), 'my slicc pants', 'i love this pants and you will too', '/public/8.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='will'), 'a very nice bottle', 'its nice', '/public/2.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'super fly shorts', 'theyre sooooo fly', '/public/3.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='tarlan'), 'a hott car', 'my car is hott and you will love it',  '/public/4.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='jacob'), 'beautiful pasta', 'its beauty and grace its miss united pasta',  '/public/5.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'cat', 'thundercat', '/public/6.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'lightly used pizza', 'diet piuzza',  '/public/7.jpg');`;
+
+const CREATE_FAVORITES = `CREATE TABLE Favorites (
+  "user_id" int4 REFERENCES Users("user_id"),
+  "item_id" int4 REFERENCES Items("item_id"),
+  "favorite_id" SERIAL PRIMARY KEY);`;
+
+const INSERT_FAVORITES = `INSERT INTO Favorites ("user_id", "item_id") VALUES
+((SELECT "user_id" FROM Users WHERE "username"='bob'), (SELECT "item_id" FROM Items WHERE "item_name"='cat')),
+((SELECT "user_id" FROM Users WHERE "username"='bob'), (SELECT "item_id" FROM Items WHERE "item_name"='dope shirt')),
+((SELECT "user_id" FROM Users WHERE "username"='jacob'), (SELECT "item_id" FROM Items WHERE "item_name"='a very nice bottle')),
+((SELECT "user_id" FROM Users WHERE "username"='jacob'), (SELECT "item_id" FROM Items WHERE "item_name"='cat'));`;
 
 const dropTables = () => {
   return new Promise((resolve, reject) => {
     pool.query(DROP_TABLES, (err, result) => {
       if (err) reject(err);
       resolve(result);
-    })
-  })
+    });
+  });
 };
 
-const createCategory = () => {
+const createUsers = () => {
   return new Promise((resolve, reject) => {
-    pool.query(CREATE_CATEGORY, (err, result) => {
+    pool.query(CREATE_USERS, (err, result) => {
       if (err) reject(err);
       resolve(result);
-    })
-  })
+    });
+  });
 };
 
-const insertCategory = () => {
+const insertUsers = () => {
   return new Promise((resolve, reject) => {
-    pool.query(INSERT_CATEGORY, (err, result) => {
-      if (err) reject(err);
-      resolve(result)
-    })
-  }
-)};
-
-const createProduct = () => {
-  return new Promise((resolve, reject) => {
-    pool.query(CREATE_PRODUCT, (err, result) => {
+    pool.query(INSERT_USERS, (err, result) => {
       if (err) reject(err);
       resolve(result);
-    })
-  })
+    });
+  });
 };
 
-const insertProduct = () => {
+const createItems = () => {
   return new Promise((resolve, reject) => {
-    pool.query(INSERT_PRODUCT, (err, result) => {
+    pool.query(CREATE_ITEMS, (err, result) => {
       if (err) reject(err);
       resolve(result);
-    })
-  })
+    });
+  });
 };
 
+const insertItems = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(INSERT_ITEMS, (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const createFavorites = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(CREATE_FAVORITES, (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
+
+const insertFavorites = () => {
+  return new Promise((resolve, reject) => {
+    pool.query(INSERT_FAVORITES, (err, result) => {
+      if (err) reject(err);
+      resolve(result);
+    });
+  });
+};
 
 dropTables()
-  .then(createCategory)
-  .then(insertCategory)
-  .then(createProduct)
-  .then(insertProduct)
-  .catch((err) => {
-    console.log(err)
+  .then(createUsers)
+  .then(insertUsers)
+  .then(createItems)
+  .then(insertItems)
+  .then(createFavorites)
+  .then(insertFavorites)
+  .catch(err => {
+    console.log(err);
   });
