@@ -13,7 +13,6 @@ const mapStateToProps = store => ({
 })
 
 function App({ onCheckoutPage, userName }) {
-  console.log('testing loop', userName)
   return (
     <div>
       {/* <Header /> */}

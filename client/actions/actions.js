@@ -78,7 +78,6 @@ export const acceptPurchase = (resMsg) => dispatch => {
 }
 
 export const createAccount = userInfo => (dispatch) => {
-  // console.log('testing action', userInfo);
   return fetch('/signup', {
     method: 'POST',
     body: JSON.stringify(userInfo),
