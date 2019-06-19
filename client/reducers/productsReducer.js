@@ -1,4 +1,4 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, REQUEST_PRODUCTS_FAILURE, ADD_TO_CART, SUBTRACT_FROM_CART, PROCEED_TO_CHECKOUT, EXIT_CHECKOUT, ACCEPT_PURCHASE, REQUEST_PURCHASE } from '../constants/actionTypes';
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, REQUEST_PRODUCTS_FAILURE, ADD_TO_CART, SUBTRACT_FROM_CART, PROCEED_TO_CHECKOUT, EXIT_CHECKOUT, ACCEPT_PURCHASE, REQUEST_PURCHASE, FORM_ONCHANGE } from '../constants/actionTypes';
 
 const initialState = {
   products: [{ name: 'dummy' }, { name: 'shoe' }],
@@ -8,9 +8,14 @@ const initialState = {
   cart: {},
   currentCategory: '',
   onCheckoutPage: false,
-  onAddItemPage: false,
+  onAddItemPage: true,
   sendPurchaseStatus: '',
   sendPurchaseError: '',
+  formControls: {
+    itemName: 'test_item',
+    userID: 'test_user',
+    description: 'test_descript',
+  }
 }
 
 const productsReducer = (state = initialState, action) => {
@@ -63,6 +68,18 @@ const productsReducer = (state = initialState, action) => {
         sendPurchaseStatus: action.payload,
         totalItemsInCart: 0,
         cart: {},
+      }
+    case FORM_ONCHANGE:
+      const event = action.payload
+      const name = event.target.name
+      const value = event.target.value
+
+      return {
+        ...state,
+        formControls: {
+          ...state.formControls,
+          [name]: value,
+        },
       }
     default:
       return state;

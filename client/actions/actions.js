@@ -51,12 +51,12 @@ export const sendPurchase = (cart) => dispatch => {
   console.log('requestPurchase');
   dispatch(requestProducts());
   return fetch('/api/purchase', {
-      method: 'POST', // or 'PUT'
-      body: JSON.stringify(cart), // data can be `string` or {object}!
-      headers:{
+    method: 'POST', // or 'PUT'
+    body: JSON.stringify(cart), // data can be `string` or {object}!
+    headers: {
       'Content-Type': 'application/json'
-      },
-    })
+    },
+  })
     .then(res => res.json())
     .then(res => {
       // if (!isValidProducts(res)) throw new Error('something went wrong')
@@ -77,3 +77,9 @@ export const acceptPurchase = (resMsg) => dispatch => {
   });
 }
 
+//new action: formOnChange
+
+export const formOnChange = (event) => ({
+  type: types.FORM_ONCHANGE,
+  payload: event,
+})

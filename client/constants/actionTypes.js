@@ -7,3 +7,6 @@ export const PROCEED_TO_CHECKOUT = 'PROCEED_TO_CHECKOUT';
 export const EXIT_CHECKOUT = 'EXIT_CHECKOUT';
 export const REQUEST_PURCHASE = 'REQUEST_PURCHASE';
 export const ACCEPT_PURCHASE = 'ACCEPT_PURCHASE';
+
+//new actionType for onChange
+export const FORM_ONCHANGE = 'FORM_ONCHANGE';
