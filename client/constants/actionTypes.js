@@ -10,3 +10,4 @@ export const ACCEPT_PURCHASE = 'ACCEPT_PURCHASE';
 
 //new actionType for onChange
 export const FORM_ONCHANGE = 'FORM_ONCHANGE';
+export const CREATE_ACCOUNT_STORE = 'CREATE_ACCOUNT_STORE';

@@ -1,4 +1,5 @@
-import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, REQUEST_PRODUCTS_FAILURE, ADD_TO_CART, SUBTRACT_FROM_CART, PROCEED_TO_CHECKOUT, EXIT_CHECKOUT, ACCEPT_PURCHASE, REQUEST_PURCHASE, FORM_ONCHANGE } from '../constants/actionTypes';
+import { REQUEST_PRODUCTS, RECEIVE_PRODUCTS, REQUEST_PRODUCTS_FAILURE, ADD_TO_CART, SUBTRACT_FROM_CART, PROCEED_TO_CHECKOUT, EXIT_CHECKOUT, ACCEPT_PURCHASE, REQUEST_PURCHASE, FORM_ONCHANGE, CREATE_ACCOUNT_STORE } from '../constants/actionTypes';
+
 
 const initialState = {
   products: [{ name: 'dummy' }, { name: 'shoe' }],
@@ -15,7 +16,8 @@ const initialState = {
     itemName: 'test_item',
     userID: 'test_user',
     description: 'test_descript',
-  }
+  },
+  userName: '',
 }
 
 const productsReducer = (state = initialState, action) => {
@@ -81,6 +83,13 @@ const productsReducer = (state = initialState, action) => {
           [name]: value,
         },
       }
+
+    case CREATE_ACCOUNT_STORE:
+      return {
+        ...state,
+        userName: action.payload,
+      }
+
     default:
       return state;
   }

@@ -1,25 +1,42 @@
 import React from 'react';
-import Header from './Header';
-import MainDisplay from './MainDisplay'
-import Footer from './Footer'
-import PurchaseModal from './PurcasheModal';
+// import Header from './Header';
+// import MainDisplay from './MainDisplay'
+// import Footer from './Footer'
+// import PurchaseModal from './PurcasheModal';
+import UserPage from './UserPage';
+import MainContainer from './MainContainer';
 import { connect } from "react-redux";
-import AddItemModal from './AddItemModal'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 const mapStateToProps = store => ({
   onAddItemPage: store.products.onAddItemPage,
   onCheckoutPage: store.products.onCheckoutPage,
+  userName: store.products.userName,
 })
 
-function App({ onCheckoutPage, onAddItemPage }) {
+//{ onCheckoutPage, userName, onAddItemPage }
+function App(props) {
   return (
-    <div>
-      <Header />
-      <MainDisplay />
-      <Footer />
-      {onCheckoutPage && <PurchaseModal />}
-      {onAddItemPage && <AddItemModal />}
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Login</Link>
+            </li>
+            <li>
+              <Link to="/home/">Home</Link>
+            </li>
+          </ul>
+        </nav>
+        <Route path="/" exact component={UserPage} />
+        <Route
+          path="/home/"
+          render={() => <MainContainer {...props} />}
+        />
+      </div>
+    </Router>
   );
 }
 
