@@ -78,6 +78,11 @@ export const acceptPurchase = resMsg => dispatch => {
   });
 }
 
+//new action: formOnChange
+export const formOnChange = (event) => ({
+  type: types.FORM_ONCHANGE,
+  payload: event,
+})
 export const createAccount = userInfo => (dispatch) => {
   return fetch('/signup', {
     method: 'POST',

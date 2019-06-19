@@ -8,4 +8,6 @@ export const EXIT_CHECKOUT = 'EXIT_CHECKOUT';
 export const REQUEST_PURCHASE = 'REQUEST_PURCHASE';
 export const ACCEPT_PURCHASE = 'ACCEPT_PURCHASE';
 
+//new actionType for onChange
+export const FORM_ONCHANGE = 'FORM_ONCHANGE';
 export const CREATE_ACCOUNT_STORE = 'CREATE_ACCOUNT_STORE';

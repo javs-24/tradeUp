@@ -10,12 +10,13 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 
 const mapStateToProps = store => ({
+  onAddItemPage: store.products.onAddItemPage,
   onCheckoutPage: store.products.onCheckoutPage,
-
   userName: store.products.userName,
 })
 
-function App({ onCheckoutPage, userName }) {
+//{ onCheckoutPage, userName, onAddItemPage }
+function App(props) {
   return (
     <Router>
       <div>
@@ -31,8 +32,8 @@ function App({ onCheckoutPage, userName }) {
         </nav>
         <Route path="/" exact component={UserPage} />
         <Route
-        path="/home/"
-        render={(props)=> <MainContainer {...props} />}
+          path="/home/"
+          render={() => <MainContainer {...props} />}
         />
       </div>
     </Router>
