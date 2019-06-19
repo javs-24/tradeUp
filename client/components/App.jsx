@@ -5,15 +5,13 @@ import React from 'react';
 // import PurchaseModal from './PurcasheModal';
 import UserPage from './UserPage';
 import MainContainer from './MainContainer';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-
 const mapStateToProps = store => ({
-  onAddItemPage: store.products.onAddItemPage,
-  onCheckoutPage: store.products.onCheckoutPage,
-  userName: store.products.userName,
-})
+  onAddItemPage: store.items.onAddItemPage,
+  userInfo: store.items.userInfo
+});
 
 //{ onCheckoutPage, userName, onAddItemPage }
 function App(props) {
@@ -31,10 +29,7 @@ function App(props) {
           </ul>
         </nav>
         <Route path="/" exact component={UserPage} />
-        <Route
-          path="/home/"
-          render={() => <MainContainer {...props} />}
-        />
+        <Route path="/home/" render={() => <MainContainer {...props} />} />
       </div>
     </Router>
   );

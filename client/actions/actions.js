@@ -1,11 +1,11 @@
-import * as types from '../constants/actionTypes';
+import actionTypes from '../constants/actionTypes';
 
-export const requestProducts = () => ({
-  type: types.REQUEST_PRODUCTS
+export const requestItems = () => ({
+  type: actionTypes.REQUEST_ITEMS
 });
 
-export const receiveProducts = json => ({
-  type: types.RECEIVE_PRODUCTS,
+export const receiveItems = json => ({
+  type: actionTypes.RECEIVE_ITEMS,
   payload: json
 });
 
@@ -13,86 +13,57 @@ export const receiveProducts = json => ({
  * Dispatch this in case of receiving invalid data or the request fails
  * @param {*} err error object
  */
-export const requestProductsFailure = err => ({
-  type: types.REQUEST_PRODUCTS_FAILURE,
+export const requestItemsFailure = err => ({
+  type: actionTypes.REQUEST_ITEMS_FAILURE,
   payload: err
 });
 
-export const fetchProducts = () => dispatch => {
-  console.log('fetchProducts');
-  dispatch(requestProducts());
-  return fetch('/api/products')
+export const fetchItems = () => dispatch => {
+  console.log('fetchItems');
+  dispatch(requestItems());
+  return fetch('/api/items')
     .then(res => res.json())
     .then(res => {
       console.log(res);
-      if (!isValidProducts(res)) throw new Error('something went wrong');
-      return dispatch(receiveProducts(res));
+      if (!isValidItems(res))
+        throw new Error('something went wrong in fetchItems');
+      return dispatch(receiveItems(res));
     })
-    .catch(err => dispatch(requestProductsFailure(err)));
+    .catch(err => dispatch(requestItemsFailure(err)));
 };
 
-function isValidProducts(res) {
+function isValidItems(res) {
   return Array.isArray(res);
 }
 
-export const addToCart = id => ({
-  type: types.ADD_TO_CART,
-  payload: id
+export const proceedToFavorites = () => ({
+  type: actionTypes.PROCEED_TO_FAVORITES
 });
 
-export const proceedToCheckout = () => ({
-  type: types.PROCEED_TO_CHECKOUT
+export const exitFavorites = () => ({
+  type: actionTypes.EXIT_FAVORITES
 });
 
-export const exitCheckout = () => ({
-  type: types.EXIT_CHECKOUT
+export const addToFavorites = id => ({
+  type: types.ADD_TO_FAVORITES,
+  payload: id // NEED TO ADD FETCH TO THIS !!!
 });
 
-export const sendPurchase = cart => dispatch => {
-  console.log('requestPurchase');
-  dispatch(requestProducts());
-  return fetch('/api/purchase', {
-    method: 'POST', // or 'PUT'
-    body: JSON.stringify(cart), // data can be `string` or {object}!
+//new action: formOnChange
+export const formOnChange = event => ({
+  type: actionTypes.FORM_ONCHANGE,
+  payload: event
+});
+export const createAccount = userInfo => dispatch => {
+  return fetch('/signup', {
+    method: 'POST',
+    body: JSON.stringify(userInfo),
     headers: {
       'Content-Type': 'application/json'
     }
   })
     .then(res => res.json())
     .then(res => {
-      // if (!isValidProducts(res)) throw new Error('something went wrong')
-      return dispatch(acceptPurchase(res));
-    })
-    .catch(err => console.error(err));
-};
-
-export const requestPurchase = () => ({
-  type: types.REQUEST_PURCHASE
-});
-
-export const acceptPurchase = resMsg => dispatch => {
-  dispatch(fetchProducts());
-  return dispatch({
-    type: types.ACCEPT_PURCHASE,
-    payload: resMsg
-  });
-}
-
-//new action: formOnChange
-export const formOnChange = (event) => ({
-  type: types.FORM_ONCHANGE,
-  payload: event,
-})
-export const createAccount = userInfo => (dispatch) => {
-  return fetch('/signup', {
-    method: 'POST',
-    body: JSON.stringify(userInfo),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(res => res.json())
-    .then((res) => {
       return dispatch(createAccountStore(res));
     })
     .catch(err => console.error(err));
@@ -102,6 +73,6 @@ export const createAccount = userInfo => (dispatch) => {
 };
 
 export const createAccountStore = res => ({
-  type: types.CREATE_ACCOUNT_STORE,
-  payload: res,
+  type: actionTypes.CREATE_ACCOUNT_STORE,
+  payload: res
 });

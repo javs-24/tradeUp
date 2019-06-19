@@ -1,30 +1,36 @@
 import React from 'react';
-import CartBtn from './CartBtn';
+import FavoritesBtn from './FavoritesBtn';
 import NavBar from './Navbar';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 import * as actions from '../actions/actions';
 
 const mapStateToProps = store => ({
-  totalItemsInCart: store.products.totalItemsInCart,
-})
+  userInfo: store.items.userInfo
+});
 
 const mapDispatchToProps = dispatch => ({
-  proceedToCheckout: () => dispatch(actions.proceedToCheckout()),
-})
+  proceedToFavorites: () => dispatch(actions.proceedToFavorites())
+});
 
 function Header(props) {
   return (
     <header>
-      <div className='header-left'>
-        <h1>SNiX</h1>
+      <div className="header-left">
+        <h1>tradeUp</h1>
       </div>
-      <div className='header-right'>
+      <div className="header-right">
         <NavBar />
-        <CartBtn proceedToCheckout={props.proceedToCheckout} totalItemsInCart={props.totalItemsInCart} />
+        <FavoritesBtn
+          proceedToFavorites={props.proceedToFavorites}
+          userInfo={props.userInfo}
+        />
       </div>
     </header>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

@@ -1,21 +1,20 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
-import Product from './Product';
+import Item from './Item';
 
 const mapStateToProps = store => ({
-  products: store.products.products,
-  fetchProductsStatus: store.products.fetchProductsStatus,
-  fetchProductsError: store.products.fetchProductsError,
+  items: store.items.items
   //map our state to props
-})
+});
 const mapDispatchtoProps = dispatch => ({
-  fetchProducts: () => dispatch(actions.fetchProducts()),
-  addToCart: (productId) => dispatch(actions.addToCart(productId)),
-})
+  fetchItems: () => dispatch(actions.fetchItems()),
+  addToFavorites: item_id => dispatch(actions.addToFavorites(item_id))
+});
+
 class Catalog extends Component {
   componentDidMount() {
-    this.props.fetchProducts();
+    this.props.fetchItems();
   }
 
   render() {
@@ -26,12 +25,17 @@ class Catalog extends Component {
     //   productsArr = this.props.products.map((product,i) => <div className='product' key={i}>{product.product_name}</div>);
     // }
     return (
-      <div id='catalogview'>
-        <Product addToCart={this.props.addToCart} products={this.props.products}/>
-    
+      <div id="catalogview">
+        <Item
+          addToFavorites={this.props.addToFavorites}
+          items={this.props.items}
+        />
       </div>
-    )
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchtoProps)(Catalog);
+export default connect(
+  mapStateToProps,
+  mapDispatchtoProps
+)(Catalog);

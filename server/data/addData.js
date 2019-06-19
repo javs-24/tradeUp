@@ -41,14 +41,14 @@ const CREATE_ITEMS = `CREATE TABLE Items (
   "item_id" SERIAL PRIMARY KEY);`;
 
 const INSERT_ITEMS = `INSERT INTO Items ("user_id", "item_name", "description", "pic_url") VALUES 
-  ((SELECT "user_id" FROM Users WHERE "username"='tarlan'), 'dope shirt', 'i love this shirt and you will too', '/public/1.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='will'), 'my slicc pants', 'i love this pants and you will too', '/public/8.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='will'), 'a very nice bottle', 'its nice', '/public/2.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'super fly shorts', 'theyre sooooo fly', '/public/3.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='tarlan'), 'a hott car', 'my car is hott and you will love it',  '/public/4.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='jacob'), 'beautiful pasta', 'its beauty and grace its miss united pasta',  '/public/5.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'cat', 'thundercat', '/public/6.jpg'),
-  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'lightly used pizza', 'diet piuzza',  '/public/7.jpg');`;
+  ((SELECT "user_id" FROM Users WHERE "username"='tarlan'), 'dope shirt', 'i love this shirt and you will too', '/static/1.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='will'), 'my slicc pants', 'i love this pants and you will too', '/static/8.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='will'), 'a very nice bottle', 'its nice', '/static/2.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'super fly shorts', 'theyre sooooo fly', '/static/3.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='tarlan'), 'a hott car', 'my car is hott and you will love it',  '/static/4.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='jacob'), 'beautiful pasta', 'its beauty and grace its miss united pasta',  '/static/5.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'cat', 'thundercat', '/static/6.jpg'),
+  ((SELECT "user_id" FROM Users WHERE "username"='a'), 'lightly used pizza', 'diet piuzza',  '/static/7.jpg');`;
 
 const CREATE_FAVORITES = `CREATE TABLE Favorites (
   "user_id" int4 REFERENCES Users("user_id"),
