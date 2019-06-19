@@ -2,8 +2,8 @@ const Favorites = require('../models/favorites');
 const favoriteController = {};
 
 favoriteController.getAll = (req, res, next) => {
-  console.log(req.query.params.user_id);
-  Favorites.getAll(req.query.params.user_id)
+  // console.log(req.params);
+  Favorites.getAll(req.params.user_id)
     .then(result => {
       res.locals.favoriteItems = result.rows;
       return next();

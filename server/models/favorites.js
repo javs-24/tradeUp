@@ -15,16 +15,10 @@ const pool = new Pool({
 const favoritesModel = {
   getAll(user_id) {
     // table join
-    console.log('hey');
-    console.log(
-      `SELECT Items.* FROM Items INNER JOIN Favorites ON Items.item_id = Favorites.item_id WHERE Favorites.user_id=${user_id}`
-    );
     return new Promise((resolve, reject) => {
       pool.query(
         `SELECT Items.* FROM Items INNER JOIN Favorites ON Items.item_id = Favorites.item_id WHERE Favorites.user_id=${user_id}`,
         (err, result) => {
-          console.log(result);
-          console.log(err);
           if (err) return reject(err);
           resolve(result);
         }
