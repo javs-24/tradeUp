@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Login from './Login';
 import CreateAccount from './CreateAccount';
 import { connect } from "react-redux";
+import * as actions from '../actions/actions';
 
 class UserPage extends Component {
   constructor(props) {
@@ -33,15 +34,23 @@ class UserPage extends Component {
 
   handleSubmit(e){
     e.preventDefault();
-    console.log('form submitted', this.state)
+    // console.log('form submitted', this.state)
     const { name, value } = e.target;
     this.setState({
       [name]: value,
+    }, () => {
+      this.props.createAccount({
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        userName: this.state.userName,
+        password: this.state.password,
+        email: this.state.email, 
+      })
     })
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <div className="wrapper">
       {
@@ -70,8 +79,8 @@ class UserPage extends Component {
   }
 };
 
-const mapDispatchToProps = store => ({
-  
+const mapDispatchToProps = dispatch => ({
+  createAccount: accountInfo => dispatch(actions.createAccount(accountInfo)),
 });
 
 export default connect(null, mapDispatchToProps)(UserPage)

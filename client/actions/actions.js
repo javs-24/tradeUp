@@ -77,3 +77,26 @@ export const acceptPurchase = (resMsg) => dispatch => {
   });
 }
 
+export const createAccount = userInfo => (dispatch) => {
+  // console.log('testing action', userInfo);
+  return fetch('/signup', {
+    method: 'POST',
+    body: JSON.stringify(userInfo),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(res => res.json())
+    .then((res) => {
+      return dispatch(createAccountStore(res));
+    })
+    .catch(err => console.error(err));
+
+  // used to check route without async from above
+  // return dispatch(createAccountStore(userInfo.userName));
+};
+
+export const createAccountStore = res => ({
+  type: types.CREATE_ACCOUNT_STORE,
+  payload: res,
+});

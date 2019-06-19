@@ -8,9 +8,12 @@ import { connect } from "react-redux";
 
 const mapStateToProps = store => ({
   onCheckoutPage: store.products.onCheckoutPage,
+
+  userName: store.products.userName,
 })
 
-function App({ onCheckoutPage }) {
+function App({ onCheckoutPage, userName }) {
+  console.log('testing loop', userName)
   return (
     <div>
       {/* <Header /> */}
