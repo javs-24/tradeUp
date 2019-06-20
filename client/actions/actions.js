@@ -20,6 +20,7 @@ export const requestItemsFailure = err => ({
 
 export const fetchItems = user_id => dispatch => {
   console.log("fetchItems");
+  console.log(user_id);
   dispatch(requestItems());
   const promiseArr = [fetch("/api/items"), fetch(`/api/favorites/${user_id}`)];
   Promise.all(promiseArr) // need to build a promise arr bc doing two fetches
@@ -139,5 +140,27 @@ export const search_byClick = searchBy => dispatch => {
 // send info to state
 export const createCategory = res => ({
   type: actionTypes.SEARCH_BYCLICK,
+  payload: res
+});
+
+// send login info
+
+export const make_login = accInfo => dispatch => {
+  return fetch("/api/login", {
+    method: "POST",
+    body: JSON.stringify(accInfo),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(res => res.json())
+    .then(res => {
+      console.log("heres the login result", res);
+      return dispatch(login(res[0]));
+    });
+};
+
+export const login = res => ({
+  type: actionTypes.LOGIN,
   payload: res
 });

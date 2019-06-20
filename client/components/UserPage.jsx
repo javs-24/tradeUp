@@ -1,23 +1,24 @@
-import React, { Component } from 'react';
-import Login from './Login';
-import CreateAccount from './CreateAccount';
-import { connect } from 'react-redux';
-import * as actions from '../actions/actions';
+import React, { Component } from "react";
+import Login from "./Login";
+import CreateAccount from "./CreateAccount";
+import { connect } from "react-redux";
+import * as actions from "../actions/actions";
 
 class UserPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       createAccountToggle: false,
-      userName: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      email: ''
+      userName: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      email: ""
     };
     this.createAccountToggle = this.createAccountToggle.bind(this);
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
   createAccountToggle(e) {
     this.setState({
@@ -52,6 +53,23 @@ class UserPage extends Component {
     );
   }
 
+  handleLoginSubmit(e) {
+    e.preventDefault();
+    // console.log('form submitted', this.state)
+    const { name, value } = e.target;
+    this.setState(
+      {
+        [name]: value
+      },
+      () => {
+        this.props.login({
+          userName: this.state.userName,
+          password: this.state.password
+        });
+      }
+    );
+  }
+
   render() {
     // console.log(this.state)
     return (
@@ -70,7 +88,7 @@ class UserPage extends Component {
         ) : (
           <Login
             createAccountToggle={this.createAccountToggle}
-            handleSubmit={this.handleSubmit}
+            handleLoginSubmit={this.handleLoginSubmit}
             onChange={this.onChange}
             userName={this.state.userName}
             password={this.state.password}
@@ -82,7 +100,8 @@ class UserPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  createAccount: accountInfo => dispatch(actions.createAccount(accountInfo))
+  createAccount: accountInfo => dispatch(actions.createAccount(accountInfo)),
+  login: accountInfo => dispatch(actions.make_login(accountInfo))
 });
 
 export default connect(

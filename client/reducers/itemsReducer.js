@@ -41,15 +41,16 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.REQUEST_ITEMS:
       return { ...state, fetchItemsStatus: "pending" };
     case actionTypes.RECEIVE_ITEMS:
-      // console.log(action.payload);
-      // action.payload.forEach(item => {
-      //   item.isFavoritedByUser = false;
-      // });
       return {
         ...state,
         fetchItemsStatus: "success",
         items: action.payload[0],
         favorites: action.payload[1]
+      };
+    case actionTypes.LOGIN:
+      return {
+        ...state,
+        userInfo: action.payload
       };
     case actionTypes.SEARCH_BY:
       return {
