@@ -1,9 +1,8 @@
 import { combineReducers, applyMiddleware } from 'redux';
-import productsReducer from './productsReducer';
-
+import itemsReducer from './itemsReducer';
 
 const reducers = combineReducers({
-  products: productsReducer,
+  items: itemsReducer
 });
 
 export default reducers;

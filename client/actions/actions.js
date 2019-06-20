@@ -1,11 +1,11 @@
-import * as types from "../constants/actionTypes";
+import actionTypes from "../constants/actionTypes";
 
-export const requestProducts = () => ({
-  type: types.REQUEST_PRODUCTS
+export const requestItems = () => ({
+  type: actionTypes.REQUEST_ITEMS
 });
 
-export const receiveProducts = json => ({
-  type: types.RECEIVE_PRODUCTS,
+export const receiveItems = json => ({
+  type: actionTypes.RECEIVE_ITEMS,
   payload: json
 });
 
@@ -13,70 +13,98 @@ export const receiveProducts = json => ({
  * Dispatch this in case of receiving invalid data or the request fails
  * @param {*} err error object
  */
-export const requestProductsFailure = err => ({
-  type: types.REQUEST_PRODUCTS_FAILURE,
+export const requestItemsFailure = err => ({
+  type: actionTypes.REQUEST_ITEMS_FAILURE,
   payload: err
 });
 
-export const fetchProducts = () => dispatch => {
-  console.log("fetchProducts");
-  dispatch(requestProducts());
-  return fetch("/api/products")
-    .then(res => res.json())
-    .then(res => {
-      if (!isValidProducts(res)) throw new Error("something went wrong");
-      return dispatch(receiveProducts(res));
+export const fetchItems = user_id => dispatch => {
+  console.log("fetchItems");
+  dispatch(requestItems());
+  const promiseArr = [fetch("/api/items"), fetch(`/api/favorites/${user_id}`)];
+  Promise.all(promiseArr) // need to build a promise arr bc doing two fetches
+    .then(responses => {
+      const parsingPromises = [];
+      responses.forEach(res => {
+        parsingPromises.push(res.json());
+      });
+      Promise.all(parsingPromises).then(parsedResponses => {
+        // console.log('ok', parsedResponses);
+        const favoritedItemIds = {};
+        parsedResponses[1].forEach(item => {
+          favoritedItemIds[item.item_id] = 1; // build obj to record which ids are favorites
+          item.favoritedByUser = true; // mark the favorites as favorites so no button appears
+        });
+        parsedResponses[0].forEach(item => {
+          // see if the current item matches the favorites
+          if (favoritedItemIds[item.item_id]) {
+            item.favoritedByUser = true;
+          }
+        });
+        if (!isValidItems(parsedResponses))
+          throw new Error("something went wrong in fetchItems");
+        return dispatch(receiveItems(parsedResponses));
+      });
     })
-    .catch(err => dispatch(requestProductsFailure(err)));
+    .catch(err => dispatch(requestItemsFailure(err)));
 };
 
-function isValidProducts(res) {
+function isValidItems(res) {
   return Array.isArray(res);
 }
 
-export const addToCart = id => ({
-  type: types.ADD_TO_CART,
-  payload: id
+export const proceedToFavorites = () => ({
+  type: actionTypes.PROCEED_TO_FAVORITES
 });
 
-export const proceedToCheckout = () => ({
-  type: types.PROCEED_TO_CHECKOUT
+export const exitFavorites = () => ({
+  type: actionTypes.EXIT_FAVORITES
 });
 
-export const exitCheckout = () => ({
-  type: types.EXIT_CHECKOUT
+export const addToFavorites = (item, item_index) => ({
+  type: actionTypes.ADD_TO_FAVORITES,
+  payload: { item, item_index } // NEED TO ADD FETCH TO THIS !!!
 });
 
-export const sendPurchase = cart => dispatch => {
-  console.log("requestPurchase");
-  dispatch(requestProducts());
-  return fetch("/api/purchase", {
-    method: "POST", // or 'PUT'
-    body: JSON.stringify(cart), // data can be `string` or {object}!
+//new action: formOnChange
+export const formOnChange = event => ({
+  type: actionTypes.FORM_ONCHANGE,
+  payload: event
+});
+export const createAccount = userInfo => dispatch => {
+  return fetch("/signup", {
+    method: "POST",
+    body: JSON.stringify(userInfo),
     headers: {
       "Content-Type": "application/json"
     }
   })
     .then(res => res.json())
     .then(res => {
-      // if (!isValidProducts(res)) throw new Error('something went wrong')
-      return dispatch(acceptPurchase(res));
+      return dispatch(createAccountStore(res));
     })
     .catch(err => console.error(err));
+
+  // used to check route without async from above
+  // return dispatch(createAccountStore(userInfo.userName));
 };
 
-export const requestPurchase = () => ({
-  type: types.REQUEST_PURCHASE
+export const createAccountStore = res => ({
+  type: actionTypes.CREATE_ACCOUNT_STORE,
+  payload: res
 });
 
-export const acceptPurchase = resMsg => dispatch => {
-  dispatch(fetchProducts());
-  return dispatch({
-    type: types.ACCEPT_PURCHASE,
-    payload: resMsg
-  });
-};
-export const search_by = banana => ({ type: types.SEARCH_BY, payload: banana });
+// export const acceptPurchase = resMsg => dispatch => {
+//   dispatch(fetchProducts());
+//   return dispatch({
+//     type: types.ACCEPT_PURCHASE,
+//     payload: resMsg
+//   });
+// };
+export const search_by = banana => ({
+  type: actionTypes.SEARCH_BY,
+  payload: banana
+});
 
 export const search_byClick = searchBy => dispatch => {
   console.log("clicked");
@@ -89,7 +117,7 @@ export const search_byClick = searchBy => dispatch => {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.text())
+      .then(res => res.json())
       .then(res => {
         // getting information from back en via res.send
         console.log(res);
@@ -102,6 +130,6 @@ export const search_byClick = searchBy => dispatch => {
 
 // send info to state
 export const createCategory = res => ({
-  type: types.search_byClick,
+  type: actionTypes.SEARCH_BYCLICK,
   payload: res
 });

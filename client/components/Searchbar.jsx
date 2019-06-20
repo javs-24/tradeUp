@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../actions/actions";
 
 const mapStateToProps = store => ({
-  store: store.products.searchBy
+  store: store.items.searchBy
 });
 
 const mapDispatchToProps = dispatch => ({
