@@ -79,21 +79,28 @@ export const acceptPurchase = resMsg => dispatch => {
 export const search_by = banana => ({ type: types.SEARCH_BY, payload: banana });
 
 export const search_byClick = searchBy => dispatch => {
-  return fetch("/api/search/", {
-    method: "POST", // or 'PUT'
-    body: JSON.stringify(searchBy), // data can be `string` or {object}!
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-    .then(res => res.json())
-    .then(res => {
-      // if (!isValidProducts(res)) throw new Error('something went wrong')
-      return dispatch(createCategory(res));
+  console.log("clicked");
+  // console.log({ item_name: searchBy });
+  return (
+    fetch("/api/search/", {
+      method: "POST", // or 'PUT'
+      body: JSON.stringify({ item_name: searchBy }), // data can be `string` or {object}!
+      headers: {
+        "Content-Type": "application/json"
+      }
     })
-    .catch(err => console.error(err));
+      .then(res => res.text())
+      .then(res => {
+        // getting information from back en via res.send
+        console.log(res);
+        return dispatch(createCategory(res));
+      })
+      // handeling errors
+      .catch(err => console.error(err))
+  );
 };
 
+// send info to state
 export const createCategory = res => ({
   type: types.search_byClick,
   payload: res

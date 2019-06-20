@@ -23,11 +23,11 @@ const initialState = {
   sendPurchaseStatus: "",
   sendPurchaseError: "",
   searchBy: "",
-  ser: ""
 };
 
 const productsReducer = (state = initialState, action) => {
   switch (action.type) {
+    // search_by
     case SEARCH_BY:
       return {
         ...state,
@@ -36,8 +36,9 @@ const productsReducer = (state = initialState, action) => {
     case SEARCH_BYCLICK:
       return {
         ...state,
-        ser: action.payload
+        items: action.payload
       };
+      // search_by
     case REQUEST_PRODUCTS:
       return { ...state, fetchProductsStatus: "pending" };
     case RECEIVE_PRODUCTS:
