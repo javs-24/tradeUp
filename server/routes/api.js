@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const itemController = require('../controllers/itemController');
 const favoriteController = require('../controllers/favoriteController');
+const userController = require('../controllers/userController');
 // Get all products
 router.get('/items', itemController.getAll, (req, res) => {
   return res.status(200).json(res.locals.items);
@@ -17,6 +18,10 @@ router.get('/favorites/:user_id', favoriteController.getAll, (req, res) => {
 
 router.post('/favorites', favoriteController.add, (req, res) => {
   return res.status(200).send('added favorite !');
+});
+
+router.post('/signup', userController.createUser, (req, res) => {
+  return res.status(200).json(res.locals.userInfo);
 });
 
 //TODO

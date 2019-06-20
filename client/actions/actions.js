@@ -71,8 +71,32 @@ export const formOnChange = event => ({
   type: actionTypes.FORM_ONCHANGE,
   payload: event
 });
-export const createAccount = userInfo => dispatch => {
-  return fetch('/signup', {
+
+export const acceptPurchase = resMsg => dispatch => {
+  dispatch(fetchProducts());
+  return dispatch({
+    type: types.ACCEPT_PURCHASE,
+    payload: resMsg
+  });
+}
+
+export const createAccount = userInfo => (dispatch) => {
+  console.log('action', userInfo)
+  // return fetch('/api/signup', {
+  //   method: 'POST',
+  //   body: JSON.stringify(userInfo),
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // })
+  //   .then(res => res.json())
+  //   .then((res) => {
+  //     console.log('comes back?', res);
+  //     return dispatch(createAccountStore(res));
+  //   })
+  //   .catch(err => console.error(err));
+
+  return fetch('/api/signup', {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {
@@ -80,8 +104,15 @@ export const createAccount = userInfo => dispatch => {
     }
   })
     .then(res => res.json())
-    .then(res => {
-      return dispatch(createAccountStore(res));
+    .then((res) => {
+      console.log('testing getting here', res, res[0]);
+      const { row } = res[0];
+      // const username = row
+      const userInfo = {};
+      // const username = row.split`,`
+      //"(asdfasdf,16)"}
+
+      return dispatch(createAccountStore(res[0]));
     })
     .catch(err => console.error(err));
 
