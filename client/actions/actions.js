@@ -71,6 +71,7 @@ export const formOnChange = event => ({
   type: actionTypes.FORM_ONCHANGE,
   payload: event
 });
+
 export const createAccount = userInfo => dispatch => {
   return fetch("/signup", {
     method: "POST",
@@ -81,7 +82,14 @@ export const createAccount = userInfo => dispatch => {
   })
     .then(res => res.json())
     .then(res => {
-      return dispatch(createAccountStore(res));
+      console.log("testing getting here", res, res[0]);
+      const { row } = res[0];
+      // const username = row
+      const userInfo = {};
+      // const username = row.split`,`
+      //"(asdfasdf,16)"}
+
+      return dispatch(createAccountStore(res[0]));
     })
     .catch(err => console.error(err));
 

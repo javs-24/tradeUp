@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const itemController = require("../controllers/itemController");
-const favoriteController = require("../controllers/favoriteController");
+const itemController = require('../controllers/itemController');
+const favoriteController = require('../controllers/favoriteController');
+const userController = require('../controllers/userController');
 // Get all products
 router.get("/items", itemController.getAll, (req, res) => {
   return res.status(200).json(res.locals.items);
@@ -25,6 +26,9 @@ router.post("/search", itemController.searchBy, (req, res) => {
 });
 //SEARCH FUTURE END SEARCH FUTURE END SEARCH FUTURE END SEARCH FUTURE END 
 
+router.post('/signup', userController.createUser, (req, res) => {
+  return res.status(200).json(res.locals.userInfo);
+});
 
 //TODO
 // // route for signing up
