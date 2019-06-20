@@ -1,4 +1,4 @@
-import actionTypes from '../constants/actionTypes';
+import actionTypes from "../constants/actionTypes";
 
 export const requestItems = () => ({
   type: actionTypes.REQUEST_ITEMS
@@ -19,9 +19,9 @@ export const requestItemsFailure = err => ({
 });
 
 export const fetchItems = user_id => dispatch => {
-  console.log('fetchItems');
+  console.log("fetchItems");
   dispatch(requestItems());
-  const promiseArr = [fetch('/api/items'), fetch(`/api/favorites/${user_id}`)];
+  const promiseArr = [fetch("/api/items"), fetch(`/api/favorites/${user_id}`)];
   Promise.all(promiseArr) // need to build a promise arr bc doing two fetches
     .then(responses => {
       const parsingPromises = [];
@@ -42,7 +42,7 @@ export const fetchItems = user_id => dispatch => {
           }
         });
         if (!isValidItems(parsedResponses))
-          throw new Error('something went wrong in fetchItems');
+          throw new Error("something went wrong in fetchItems");
         return dispatch(receiveItems(parsedResponses));
       });
     })
@@ -72,40 +72,17 @@ export const formOnChange = event => ({
   payload: event
 });
 
-export const acceptPurchase = resMsg => dispatch => {
-  dispatch(fetchProducts());
-  return dispatch({
-    type: types.ACCEPT_PURCHASE,
-    payload: resMsg
-  });
-}
-
-export const createAccount = userInfo => (dispatch) => {
-  console.log('action', userInfo)
-  // return fetch('/api/signup', {
-  //   method: 'POST',
-  //   body: JSON.stringify(userInfo),
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  // })
-  //   .then(res => res.json())
-  //   .then((res) => {
-  //     console.log('comes back?', res);
-  //     return dispatch(createAccountStore(res));
-  //   })
-  //   .catch(err => console.error(err));
-
-  return fetch('/api/signup', {
-    method: 'POST',
+export const createAccount = userInfo => dispatch => {
+  return fetch("/signup", {
+    method: "POST",
     body: JSON.stringify(userInfo),
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     }
   })
     .then(res => res.json())
-    .then((res) => {
-      console.log('testing getting here', res, res[0]);
+    .then(res => {
+      console.log("testing getting here", res, res[0]);
       const { row } = res[0];
       // const username = row
       const userInfo = {};
@@ -122,5 +99,45 @@ export const createAccount = userInfo => (dispatch) => {
 
 export const createAccountStore = res => ({
   type: actionTypes.CREATE_ACCOUNT_STORE,
+  payload: res
+});
+
+// export const acceptPurchase = resMsg => dispatch => {
+//   dispatch(fetchProducts());
+//   return dispatch({
+//     type: types.ACCEPT_PURCHASE,
+//     payload: resMsg
+//   });
+// };
+export const search_by = banana => ({
+  type: actionTypes.SEARCH_BY,
+  payload: banana
+});
+
+export const search_byClick = searchBy => dispatch => {
+  console.log("clicked");
+  // console.log({ item_name: searchBy });
+  return (
+    fetch("/api/search/", {
+      method: "POST", // or 'PUT'
+      body: JSON.stringify({ item_name: searchBy }), // data can be `string` or {object}!
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        // getting information from back en via res.send
+        console.log(res);
+        return dispatch(createCategory(res));
+      })
+      // handeling errors
+      .catch(err => console.error(err))
+  );
+};
+
+// send info to state
+export const createCategory = res => ({
+  type: actionTypes.SEARCH_BYCLICK,
   payload: res
 });

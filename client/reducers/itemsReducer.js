@@ -1,4 +1,4 @@
-import actionTypes from '../constants/actionTypes';
+import actionTypes from "../constants/actionTypes";
 
 // const initialState = {
 //   products: [{ name: 'dummy' }, { name: 'shoe' }],
@@ -23,22 +23,23 @@ const initialState = {
   items: [],
   favorites: [],
   formControls: {
-    itemName: 'test_item',
-    userID: 'test_user',
-    description: 'test_descript'
+    itemName: "test_item",
+    userID: "test_user",
+    description: "test_descript"
   },
-  userInfo: { username: 'bob', user_id: 1 },
+  userInfo: { username: "bob", user_id: 1 },
   onFavoritesPage: false,
   onAddItemPage: false,
-  fetchItemsStatus: '',
-  fetchFavoritesStatus: ''
+  fetchItemsStatus: "",
+  fetchFavoritesStatus: "",
+  searchBy: ""
 };
 
 const itemsReducer = (state = initialState, action) => {
   // console.log(state);
   switch (action.type) {
     case actionTypes.REQUEST_ITEMS:
-      return { ...state, fetchItemsStatus: 'pending' };
+      return { ...state, fetchItemsStatus: "pending" };
     case actionTypes.RECEIVE_ITEMS:
       // console.log(action.payload);
       // action.payload.forEach(item => {
@@ -46,14 +47,24 @@ const itemsReducer = (state = initialState, action) => {
       // });
       return {
         ...state,
-        fetchItemsStatus: 'success',
+        fetchItemsStatus: "success",
         items: action.payload[0],
         favorites: action.payload[1]
+      };
+    case actionTypes.SEARCH_BY:
+      return {
+        ...state,
+        searchBy: action.payload
+      };
+    case actionTypes.SEARCH_BYCLICK:
+      return {
+        ...state,
+        items: action.payload
       };
     case actionTypes.REQUEST_ITEMS_FAILURE:
       return {
         ...state,
-        fetchItemsStatus: 'failure',
+        fetchItemsStatus: "failure",
         fetchItemsError: action.payload
       };
     case actionTypes.PROCEED_TO_FAVORITES:
@@ -74,14 +85,14 @@ const itemsReducer = (state = initialState, action) => {
       action.payload.item.favoritedByUser = true;
       newItems[action.payload.item_index].favoritedByUser = true;
       newFaves.push(action.payload.item);
-      fetch('/api/favorites', {
-        method: 'POST',
+      fetch("/api/favorites", {
+        method: "POST",
         body: JSON.stringify({
           user_id: state.userInfo.user_id,
           item_id: action.payload.item.item_id
         }),
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         }
       }).then(res => console.log(res));
       return {
