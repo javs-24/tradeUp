@@ -7,23 +7,21 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 const mapStateToProps = store => ({
   onAddItemPage: store.items.onAddItemPage,
   onFavoritesPage: store.items.onFavoritesPage,
-  userInfo: store.items.userInfo,
+  userInfo: store.items.userInfo
 });
 
 function App(props) {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Login</Link>
-            </li>
-            <li>
-              <Link to="/home/">Home</Link>
-            </li>
-          </ul>
-        </nav>
+      <div id="router-wrapper">
+        <div id="links">
+          <Link to="/" className="link login-link">
+            login
+          </Link>
+          <Link to="/home/" className="link home-link">
+            home
+          </Link>
+        </div>
         <Route path="/" exact component={UserPage} />
         <Route path="/home/" render={() => <MainContainer {...props} />} />
       </div>

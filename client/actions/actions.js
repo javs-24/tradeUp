@@ -1,4 +1,4 @@
-import actionTypes from "../constants/actionTypes";
+import actionTypes from '../constants/actionTypes';
 
 export const requestItems = () => ({
   type: actionTypes.REQUEST_ITEMS
@@ -19,9 +19,9 @@ export const requestItemsFailure = err => ({
 });
 
 export const fetchItems = user_id => dispatch => {
-  console.log("fetchItems");
+  console.log('fetchItems');
   dispatch(requestItems());
-  const promiseArr = [fetch("/api/items"), fetch(`/api/favorites/${user_id}`)];
+  const promiseArr = [fetch('/api/items'), fetch(`/api/favorites/${user_id}`)];
   Promise.all(promiseArr) // need to build a promise arr bc doing two fetches
     .then(responses => {
       const parsingPromises = [];
@@ -42,7 +42,7 @@ export const fetchItems = user_id => dispatch => {
           }
         });
         if (!isValidItems(parsedResponses))
-          throw new Error("something went wrong in fetchItems");
+          throw new Error('something went wrong in fetchItems');
         return dispatch(receiveItems(parsedResponses));
       });
     })
@@ -78,16 +78,16 @@ export const formOnChange = event => ({
 });
 
 export const createAccount = userInfo => dispatch => {
-  return fetch("/signup", {
-    method: "POST",
+  return fetch('/signup', {
+    method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     }
   })
     .then(res => res.json())
     .then(res => {
-      console.log("testing getting here", res, res[0]);
+      console.log('testing getting here', res, res[0]);
       const { row } = res[0];
       // const username = row
       const userInfo = {};
@@ -120,14 +120,13 @@ export const search_by = banana => ({
 });
 
 export const search_byClick = searchBy => dispatch => {
-  socket.emit("message", "yeeeet");
   // console.log({ item_name: searchBy });
   return (
-    fetch("/api/search/", {
-      method: "POST", // or 'PUT'
+    fetch('/api/search/', {
+      method: 'POST', // or 'PUT'
       body: JSON.stringify({ item_name: searchBy }), // data can be `string` or {object}!
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json'
       }
     })
       .then(res => res.json())
@@ -150,16 +149,16 @@ export const createCategory = res => ({
 // send login info
 
 export const make_login = accInfo => dispatch => {
-  return fetch("/api/login", {
-    method: "POST",
+  return fetch('/api/login', {
+    method: 'POST',
     body: JSON.stringify(accInfo),
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json'
     }
   })
     .then(res => res.json())
     .then(res => {
-      console.log("heres the login result", res);
+      console.log('heres the login result', res);
       return dispatch(login(res[0]));
     });
 };

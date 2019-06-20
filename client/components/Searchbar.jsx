@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import * as actions from "../actions/actions";
+import React from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
 const mapStateToProps = store => ({
   store: store.items.searchBy
@@ -15,9 +15,11 @@ function Search({ search_by, search_byClick, store }) {
   return (
     <div>
       <input
+        autoComplete="off"
         id="searchInput"
-        placeholder="What category are you looking for?"
+        placeholder="do u like searching"
         onChange={event => search_by(event.target.value)}
+        type="text"
       />
       <button onClick={e => search_byClick(store)} id="searchBtn">
         Search

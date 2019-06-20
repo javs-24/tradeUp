@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export default function Login({
   createAccountToggle,
@@ -8,11 +8,10 @@ export default function Login({
   password
 }) {
   return (
-    <div className="login">
-      <p>User Login</p>
-      <form onSubmit={handleLoginSubmit}>
+    <div className="login-create-acc">
+      <p id="login-title">login</p>
+      <form autocomplete="off" onSubmit={handleLoginSubmit}>
         <div className="userName">
-          <label>UserName:</label>
           <input
             name="userName"
             onChange={e => onChange(e)}
@@ -22,7 +21,6 @@ export default function Login({
           />
         </div>
         <div className="password">
-          <label>Password:</label>
           <input
             name="password"
             onChange={e => onChange(e)}
@@ -33,7 +31,9 @@ export default function Login({
         </div>
         <input type="submit" value="Submit" />
       </form>
-      <button onClick={createAccountToggle}>Create Account</button>
+      <button onClick={createAccountToggle}>
+        u can create an account if u click this button
+      </button>
     </div>
   );
 }
