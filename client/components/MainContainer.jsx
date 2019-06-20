@@ -2,17 +2,18 @@ import React from 'react';
 import Header from './Header';
 import MainDisplay from './MainDisplay';
 import Footer from './Footer';
-import PurchaseModal from './PurchaseModal';
+import FavoritesModal from './FavoritesModal';
+import AddItemModal from './AddItemModal';
 
-
-export default function MainContainer({ onCheckoutPage, userName }) {
-  console.log('testing userName', userName)
+export default function MainContainer({ onFavoritesPage, onAddItemPage, userInfo }) {
+  console.log('redux circle test', userInfo)
   return (
     <div>
       <Header />
       <MainDisplay />
       <Footer />
-      {onCheckoutPage && <PurchaseModal />}
+      {onFavoritesPage && <FavoritesModal />}
+      {onAddItemPage && <AddItemModal />}
     </div>
-  )
+  );
 }

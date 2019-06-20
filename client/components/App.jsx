@@ -1,22 +1,16 @@
 import React from 'react';
-// import Header from './Header';
-// import MainDisplay from './MainDisplay'
-// import Footer from './Footer'
-// import PurchaseModal from './PurcasheModal';
 import UserPage from './UserPage';
 import MainContainer from './MainContainer';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-
 const mapStateToProps = store => ({
-  onCheckoutPage: store.products.onCheckoutPage,
-
-  userName: store.products.userName,
-})
+  onAddItemPage: store.items.onAddItemPage,
+  onFavoritesPage: store.items.onFavoritesPage,
+  userInfo: store.items.userInfo,
+});
 
 function App(props) {
-  
   return (
     <Router>
       <div>
@@ -31,10 +25,7 @@ function App(props) {
           </ul>
         </nav>
         <Route path="/" exact component={UserPage} />
-        <Route
-        path="/home/"
-        render={()=> <MainContainer {...props} />}
-        />
+        <Route path="/home/" render={() => <MainContainer {...props} />} />
       </div>
     </Router>
   );
