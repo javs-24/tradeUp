@@ -4,9 +4,9 @@ const initialState = {
   items: [],
   favorites: [],
   formControls: {
-    itemName: "test_item",
-    userID: "test_user",
-    description: "test_descript"
+    itemName: "",
+    userID: "",
+    description: ""
   },
   userInfo: { username: "bob", user_id: 1 },
   onFavoritesPage: false,
@@ -104,6 +104,20 @@ const itemsReducer = (state = initialState, action) => {
         userInfo: action.payload
       };
 
+    case actionTypes.PROCEED_TO_SELL:
+      return {
+        ...state,
+        onAddItemPage: true,
+      };
+
+    case actionTypes.EXIT_SELL:
+      return {
+        ...state,
+        onAddItemPage: false,
+      };
+
+    case actionTypes.ADD_ITEM:
+    //not yet finished...
     default:
       return state;
   }
