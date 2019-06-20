@@ -13,7 +13,9 @@ const initialState = {
   onAddItemPage: false,
   fetchItemsStatus: "",
   fetchFavoritesStatus: "",
-  searchBy: ""
+  searchBy: "",
+  logedin: "",
+  signedIn: ""
 };
 
 const itemsReducer = (state = initialState, action) => {
@@ -30,13 +32,20 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.LOGIN:
       return {
         ...state,
-        userInfo: action.payload
+        userInfo: action.payload,
+        logedin: true
+      };
+    case actionTypes.INVALIDU:
+      return {
+        ...state,
+        logedin: action.payload
       };
     case actionTypes.UPDATE_ITEMS:
       return {
         ...state,
         items: action.payload
       };
+
     case actionTypes.SEARCH_BY:
       return {
         ...state,
@@ -101,7 +110,13 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.CREATE_ACCOUNT_STORE:
       return {
         ...state,
-        userInfo: action.payload
+        userInfo: action.payload,
+        signedIn: true
+      };
+    case actionTypes.SIGNED:
+      return {
+        ...state,
+        signedIn: false
       };
 
     default:

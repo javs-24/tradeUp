@@ -4,28 +4,35 @@ const Users = require("../models/users");
 const userController = {};
 
 userController.createUser = (req, res, next) => {
-  // console.log('testing this, does it get here?');
-  // console.log(req.body)
-  Users.createUser(req.body.userName, req.body.password)
+  Users.checkSign(req.body.userName)
     .then(result => {
-      console.log("testng rows", result.rows);
-      res.locals.userInfo = result.rows;
-      // console.log(res.locals);
-      next();
+      if (result.rows.length === 0) {
+        Users.createUser(req.body.userName, req.body.password)
+          .then(result => {
+            console.log(result);
+            res.locals.userInfo = result.rows;
+            next();
+          })
+          .catch(err => next(err));
+      } else {
+        res.locals.userInfo = [];
+        return next();
+      }
     })
-    .catch(err => next(err));
+    .catch(err => console.log("errrrror in the userController =>", err));
+
   // next();
 };
 
 userController.login = (req, res, next) => {
   Users.checkUser(req.body.userName, req.body.password)
     .then(data => {
-      console.log(data);
+      console.log("first condition==>>", data);
       res.locals.logedIn = data.rows;
       return next();
     })
     .catch(err => {
-      console.log(` There has been error :/ =>>${err}`);
+      console.log("you got some error =>", err);
     });
 };
 

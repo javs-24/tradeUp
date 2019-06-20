@@ -41,6 +41,17 @@ const usersModel = {
         }
       );
     });
+  },
+  checkSign(userName) {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        `SELECT * FROM users WHERE "username"='${userName}'`,
+        (err, result) => {
+          if (err) return reject(err);
+          resolve(result);
+        }
+      );
+    });
   }
 };
 
