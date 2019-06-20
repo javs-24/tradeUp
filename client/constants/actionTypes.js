@@ -10,7 +10,10 @@ const actionTypes = {
   SEARCH_BY: "SEARCH_BY",
   SEARCH_BYCLICK: "SEARCH_BYCLICK",
   UPDATE_ITEMS: "UPDATE_ITEMS",
-  LOGIN: "LOGIN"
+  LOGIN: "LOGIN",
+  PROCEED_TO_SELL: "PROCEED_TO_SELL",
+  EXIT_SELL: "EXIT_SELL",
+  ADD_ITEM: "ADD_ITEM",
 };
 
 export default actionTypes;
