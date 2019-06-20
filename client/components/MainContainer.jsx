@@ -5,8 +5,11 @@ import Footer from './Footer';
 import FavoritesModal from './FavoritesModal';
 import AddItemModal from './AddItemModal';
 
-export default function MainContainer({ onFavoritesPage, onAddItemPage, userInfo }) {
-  console.log('redux circle test', userInfo)
+export default function MainContainer({
+  onFavoritesPage,
+  onAddItemPage,
+  userInfo
+}) {
   return (
     <div>
       <Header />

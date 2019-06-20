@@ -10,7 +10,7 @@ export default function Login({
   return (
     <div className="login-create-acc">
       <p id="login-title">login</p>
-      <form autocomplete="off" onSubmit={handleLoginSubmit}>
+      <form autoComplete="off" onSubmit={handleLoginSubmit}>
         <div className="userName">
           <input
             name="userName"

@@ -1,4 +1,4 @@
-const Items = require("../models/items");
+const Items = require('../models/items');
 const itemController = {};
 ///SEARCH FUTURE
 itemController.searchBy = (req, res, next) => {

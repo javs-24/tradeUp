@@ -1,5 +1,13 @@
 import actionTypes from '../constants/actionTypes';
 
+// import io from 'socket.io-client';
+// const socket = io.connect('http://localhost:8080');
+// console.log(socket);
+// socket.on('message', function(data) {
+//   console.log(data);
+// });
+// socket.emit('message', 'yeet');
+
 export const requestItems = () => ({
   type: actionTypes.REQUEST_ITEMS
 });
