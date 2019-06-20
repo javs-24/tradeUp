@@ -1,13 +1,5 @@
 import actionTypes from '../constants/actionTypes';
 
-// import io from 'socket.io-client';
-// const socket = io.connect('http://localhost:8080');
-// console.log(socket);
-// socket.on('message', function(data) {
-//   console.log(data);
-// });
-// socket.emit('message', 'yeet');
-
 export const requestItems = () => ({
   type: actionTypes.REQUEST_ITEMS
 });
@@ -97,17 +89,10 @@ export const createAccount = userInfo => dispatch => {
     .then(res => {
       console.log('testing getting here', res, res[0]);
       const { row } = res[0];
-      // const username = row
       const userInfo = {};
-      // const username = row.split`,`
-      //"(asdfasdf,16)"}
-
       return dispatch(createAccountStore(res[0]));
     })
     .catch(err => console.error(err));
-
-  // used to check route without async from above
-  // return dispatch(createAccountStore(userInfo.userName));
 };
 
 export const createAccountStore = res => ({
@@ -115,13 +100,6 @@ export const createAccountStore = res => ({
   payload: res
 });
 
-// export const acceptPurchase = resMsg => dispatch => {
-//   dispatch(fetchProducts());
-//   return dispatch({
-//     type: types.ACCEPT_PURCHASE,
-//     payload: resMsg
-//   });
-// };
 export const search_by = banana => ({
   type: actionTypes.SEARCH_BY,
   payload: banana

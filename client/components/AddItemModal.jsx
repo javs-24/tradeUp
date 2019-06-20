@@ -1,6 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3000/');
+console.log(socket);
+socket.on('message', function(data) {
+  console.log(data);
+});
+socket.emit('message', 'yeet');
+
 const mapStateToProps = store => ({
   formControls: store.items.formControls
 });
