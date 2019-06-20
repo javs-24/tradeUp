@@ -33,11 +33,16 @@ const itemModel = {
       });
     });
   },
-  add(user_id, item_name, description) {
+  add(user_id, item_name, description, pic_url) {
     // when a user submits an item, it gets saved to the products db
     // TODO: ALSO NEED TO SAVE THE IMAGE URL THAT IS RETURNED FROM AMAZON OR FIREBASE
     // for now:
-    const pic_url = "../public/1.jpg";
+    // const pic_url = "../public/1.jpg";
+    console.log(user_id);
+    console.log(item_name);
+    console.log(description);
+    console.log(pic_url);
+
     return new Promise((resolve, reject) => {
       pool.query(
         'INSERT INTO Items("user_id", "item_name", "description", "pic_url") values($1, $2, $3, $4)',

@@ -33,17 +33,23 @@ class AddItemModal extends React.Component {
     })
       .then(res => res.json())
       .then(imgURL => {
-        console.log(imgURL)
-        console.log(this.props.formControls)
+
+        let data = {
+          user_id: this.props.formControls.userID,
+          item_name: this.props.formControls.itemName,
+          description: this.props.formControls.description,
+          pic_url: imgURL
+        }
+
         fetch('/api/items', {
           method: 'POST',
-          body: {
-            'user_id': this.props.formControls.userID,
-            'item_name': this.props.formControls.itemName,
-            'description': this.props.formControls.description,
-            'pic_url': imgURL,
-          }
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
         })
+          .then(res => res.json())
+          .then(() => this.props.exitSell()) //exits sell modal
       })
       .catch(err => console.log(err))
   }

@@ -39,7 +39,8 @@ itemController.getAll = (req, res, next) => {
  * @param next
  */
 itemController.add = (req, res, next) => {
-  Items.add(req.body.user_id, req.body.item_name, req.body.description)
+  console.log(req.body)
+  Items.add(req.body.user_id, req.body.item_name, req.body.description, req.body.pic_url)
     .then(result => {
       next();
     })

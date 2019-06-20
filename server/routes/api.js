@@ -12,7 +12,7 @@ router.get("/items", itemController.getAll, (req, res) => {
 });
 
 router.post("/items", itemController.add, (req, res) => {
-  return res.status(200).send("added item !");
+  return res.status(200).json("added item !");
 });
 
 router.get("/favorites/:user_id", favoriteController.getAll, (req, res) => {
