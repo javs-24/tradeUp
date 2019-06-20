@@ -5,7 +5,8 @@ import Footer from './Footer';
 import PurchaseModal from './PurchaseModal';
 
 
-export default function MainContainer({ onCheckoutPage }) {
+export default function MainContainer({ onCheckoutPage, userName }) {
+  console.log('testing userName', userName)
   return (
     <div>
       <Header />

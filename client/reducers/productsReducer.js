@@ -14,6 +14,7 @@ const initialState = {
 }
 
 const productsReducer = (state = initialState, action) => {
+  console.log('reducer act', action)
   switch (action.type) {
     case REQUEST_PRODUCTS:
       return { ...state, fetchProductsStatus: 'pending' };

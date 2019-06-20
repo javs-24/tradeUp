@@ -15,7 +15,8 @@ const mapStateToProps = store => ({
   userName: store.products.userName,
 })
 
-function App({ onCheckoutPage, userName }) {
+function App(props) {
+  
   return (
     <Router>
       <div>
@@ -32,7 +33,7 @@ function App({ onCheckoutPage, userName }) {
         <Route path="/" exact component={UserPage} />
         <Route
         path="/home/"
-        render={(props)=> <MainContainer {...props} />}
+        render={()=> <MainContainer {...props} />}
         />
       </div>
     </Router>

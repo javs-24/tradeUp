@@ -79,15 +79,31 @@ export const acceptPurchase = resMsg => dispatch => {
 }
 
 export const createAccount = userInfo => (dispatch) => {
-  return fetch('/signup', {
+  console.log('action', userInfo)
+  // return fetch('/api/signup', {
+  //   method: 'POST',
+  //   body: JSON.stringify(userInfo),
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // })
+  //   .then(res => res.json())
+  //   .then((res) => {
+  //     console.log('comes back?', res);
+  //     return dispatch(createAccountStore(res));
+  //   })
+  //   .catch(err => console.error(err));
+
+  return fetch('/api/signup', {
     method: 'POST',
     body: JSON.stringify(userInfo),
     headers: {
       'Content-Type': 'application/json',
     },
   })
-    .then(res => res.json())
+    .then(res => res.text())
     .then((res) => {
+      console.log('testing getting here', res);
       return dispatch(createAccountStore(res));
     })
     .catch(err => console.error(err));
