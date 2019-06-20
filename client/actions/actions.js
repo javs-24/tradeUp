@@ -20,7 +20,6 @@ export const requestItemsFailure = err => ({
 
 export const fetchItems = user_id => dispatch => {
   console.log("fetchItems");
-  console.log(user_id);
   dispatch(requestItems());
   const promiseArr = [fetch("/api/items"), fetch(`/api/favorites/${user_id}`)];
   Promise.all(promiseArr) // need to build a promise arr bc doing two fetches
@@ -49,6 +48,11 @@ export const fetchItems = user_id => dispatch => {
     })
     .catch(err => dispatch(requestItemsFailure(err)));
 };
+
+export const updateItems = updatedItemList => ({
+  type: actionTypes.UPDATE_ITEMS,
+  payload: updatedItemList
+});
 
 function isValidItems(res) {
   return Array.isArray(res);
@@ -116,7 +120,7 @@ export const search_by = banana => ({
 });
 
 export const search_byClick = searchBy => dispatch => {
-  console.log("clicked");
+  socket.emit("message", "yeeeet");
   // console.log({ item_name: searchBy });
   return (
     fetch("/api/search/", {

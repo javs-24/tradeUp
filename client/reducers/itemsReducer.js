@@ -1,24 +1,5 @@
 import actionTypes from "../constants/actionTypes";
 
-// const initialState = {
-//   products: [{ name: 'dummy' }, { name: 'shoe' }],
-//   totalItemsInCart: 0,
-//   fetchProductsStatus: '',
-//   fetchProductsError: '',
-//   cart: {},
-//   currentCategory: '',
-//   onCheckoutPage: false,
-//   onAddItemPage: true,
-//   sendPurchaseStatus: '',
-//   sendPurchaseError: '',
-//   formControls: {
-//     itemName: 'test_item',
-//     userID: 'test_user',
-//     description: 'test_descript'
-//   },
-//   userName: ''
-// };
-
 const initialState = {
   items: [],
   favorites: [],
@@ -36,7 +17,6 @@ const initialState = {
 };
 
 const itemsReducer = (state = initialState, action) => {
-  // console.log(state);
   switch (action.type) {
     case actionTypes.REQUEST_ITEMS:
       return { ...state, fetchItemsStatus: "pending" };
@@ -51,6 +31,11 @@ const itemsReducer = (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload
+      };
+    case actionTypes.UPDATE_ITEMS:
+      return {
+        ...state,
+        items: action.payload
       };
     case actionTypes.SEARCH_BY:
       return {
@@ -80,7 +65,6 @@ const itemsReducer = (state = initialState, action) => {
       };
 
     case actionTypes.ADD_TO_FAVORITES:
-      // console.log('payload', action.payload);
       const newFaves = Array.from(state.favorites);
       const newItems = Array.from(state.items);
       action.payload.item.favoritedByUser = true;
