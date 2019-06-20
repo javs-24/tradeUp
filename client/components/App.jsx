@@ -1,8 +1,4 @@
 import React from 'react';
-// import Header from './Header';
-// import MainDisplay from './MainDisplay'
-// import Footer from './Footer'
-// import PurchaseModal from './PurcasheModal';
 import UserPage from './UserPage';
 import MainContainer from './MainContainer';
 import { connect } from 'react-redux';
@@ -10,10 +6,9 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 const mapStateToProps = store => ({
   onAddItemPage: store.items.onAddItemPage,
-  userInfo: store.items.userInfo
+  onFavoritesPage: store.items.onFavoritesPage
 });
 
-//{ onCheckoutPage, userName, onAddItemPage }
 function App(props) {
   return (
     <Router>

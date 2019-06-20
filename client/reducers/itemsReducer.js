@@ -20,29 +20,14 @@ import actionTypes from '../constants/actionTypes';
 // };
 
 const initialState = {
-  items: [
-    {
-      item_id: 1,
-      item_name: 'dummy',
-      user_id: 1,
-      description: 'dope',
-      pic_url: '../../server/public/1.jpg'
-    },
-    {
-      item_id: 2,
-      item_name: 'other dummy',
-      user_id: 1,
-      description: 'dope',
-      pic_url: '../../server/public/1.jpg'
-    }
-  ],
-  favorites: [{ name: 'dummy' }, { name: 'shoe' }],
+  items: [],
+  favorites: [],
   formControls: {
     itemName: 'test_item',
     userID: 'test_user',
     description: 'test_descript'
   },
-  userInfo: { name: 'bob', id: 1 },
+  userInfo: { username: 'bob', user_id: 1 },
   onFavoritesPage: false,
   onAddItemPage: false,
   fetchItemsStatus: '',
@@ -50,14 +35,20 @@ const initialState = {
 };
 
 const itemsReducer = (state = initialState, action) => {
+  // console.log(state);
   switch (action.type) {
     case actionTypes.REQUEST_ITEMS:
       return { ...state, fetchItemsStatus: 'pending' };
     case actionTypes.RECEIVE_ITEMS:
+      // console.log(action.payload);
+      // action.payload.forEach(item => {
+      //   item.isFavoritedByUser = false;
+      // });
       return {
         ...state,
         fetchItemsStatus: 'success',
-        items: action.payload
+        items: action.payload[0],
+        favorites: action.payload[1]
       };
     case actionTypes.REQUEST_ITEMS_FAILURE:
       return {
@@ -77,9 +68,26 @@ const itemsReducer = (state = initialState, action) => {
       };
 
     case actionTypes.ADD_TO_FAVORITES:
+      // console.log('payload', action.payload);
+      const newFaves = Array.from(state.favorites);
+      const newItems = Array.from(state.items);
+      action.payload.item.favoritedByUser = true;
+      newItems[action.payload.item_index].favoritedByUser = true;
+      newFaves.push(action.payload.item);
+      fetch('/api/favorites', {
+        method: 'POST',
+        body: JSON.stringify({
+          user_id: state.userInfo.user_id,
+          item_id: action.payload.item.item_id
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(res => console.log(res));
       return {
         ...state,
-        favorites: action.payload
+        items: newItems,
+        favorites: newFaves
       };
     case actionTypes.FORM_ONCHANGE:
       const event = action.payload;

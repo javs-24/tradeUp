@@ -21,10 +21,7 @@ function Header(props) {
       </div>
       <div className="header-right">
         <NavBar />
-        <FavoritesBtn
-          proceedToFavorites={props.proceedToFavorites}
-          userInfo={props.userInfo}
-        />
+        <FavoritesBtn proceedToFavorites={props.proceedToFavorites} />
       </div>
     </header>
   );

@@ -18,16 +18,33 @@ export const requestItemsFailure = err => ({
   payload: err
 });
 
-export const fetchItems = () => dispatch => {
+export const fetchItems = user_id => dispatch => {
   console.log('fetchItems');
   dispatch(requestItems());
-  return fetch('/api/items')
-    .then(res => res.json())
-    .then(res => {
-      console.log(res);
-      if (!isValidItems(res))
-        throw new Error('something went wrong in fetchItems');
-      return dispatch(receiveItems(res));
+  const promiseArr = [fetch('/api/items'), fetch(`/api/favorites/${user_id}`)];
+  Promise.all(promiseArr) // need to build a promise arr bc doing two fetches
+    .then(responses => {
+      const parsingPromises = [];
+      responses.forEach(res => {
+        parsingPromises.push(res.json());
+      });
+      Promise.all(parsingPromises).then(parsedResponses => {
+        // console.log('ok', parsedResponses);
+        const favoritedItemIds = {};
+        parsedResponses[1].forEach(item => {
+          favoritedItemIds[item.item_id] = 1; // build obj to record which ids are favorites
+          item.favoritedByUser = true; // mark the favorites as favorites so no button appears
+        });
+        parsedResponses[0].forEach(item => {
+          // see if the current item matches the favorites
+          if (favoritedItemIds[item.item_id]) {
+            item.favoritedByUser = true;
+          }
+        });
+        if (!isValidItems(parsedResponses))
+          throw new Error('something went wrong in fetchItems');
+        return dispatch(receiveItems(parsedResponses));
+      });
     })
     .catch(err => dispatch(requestItemsFailure(err)));
 };
@@ -44,9 +61,9 @@ export const exitFavorites = () => ({
   type: actionTypes.EXIT_FAVORITES
 });
 
-export const addToFavorites = id => ({
-  type: types.ADD_TO_FAVORITES,
-  payload: id // NEED TO ADD FETCH TO THIS !!!
+export const addToFavorites = (item, item_index) => ({
+  type: actionTypes.ADD_TO_FAVORITES,
+  payload: { item, item_index } // NEED TO ADD FETCH TO THIS !!!
 });
 
 //new action: formOnChange

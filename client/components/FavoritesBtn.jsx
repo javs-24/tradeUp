@@ -2,9 +2,8 @@ import React from 'react';
 
 function FavoritesBtn(props) {
   return (
-    <button id="favorites-btn" onClick={props.proceedToCheckout}>
-      <p>{props.totalItemsInCart}</p>
-      <img src="/static/cart-logo3.png" width="50px" alt="Cart Img"></img>
+    <button id="favorites-btn" onClick={props.proceedToFavorites}>
+      <p>show favorites</p>
     </button>
   );
 }

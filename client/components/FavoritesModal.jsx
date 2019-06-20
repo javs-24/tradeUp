@@ -5,12 +5,12 @@ import Item from './Item';
 import * as actions from '../actions/actions';
 
 const mapStateToProps = store => ({
-  favorites: store.items.favorites
+  favorites: store.items.favorites,
+  userInfo: store.items.userInfo
 });
 
 const mapDispatchToProps = dispatch => ({
-  exitFavorites: () => dispatch(actions.exitFavorites()),
-  addToFavorites: () => dispatch(actions.addToFavorites())
+  exitFavorites: () => dispatch(actions.exitFavorites())
 });
 
 function FavoritesModal(props) {
@@ -26,10 +26,7 @@ function FavoritesModal(props) {
                 <span>here they are</span>
                 <span>they're cool</span>
               </li>
-              <Item
-                items={props.favorites}
-                addToFavorites={props.addToFavorites}
-              />
+              <Item items={props.favorites} />
             </ul>
           </div>
         </div>

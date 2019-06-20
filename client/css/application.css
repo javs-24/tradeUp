@@ -86,6 +86,8 @@ h1 {
 
 #catalog {
   display: flex;
+  text-align: center;
+  justify-content: center;
   flex-wrap: wrap;
   padding: 0.5em;
   overflow: auto;
@@ -93,32 +95,53 @@ h1 {
 }
 
 .item {
-  border: 4px solid rgb(180, 211, 251);
+  border: 4px solid rgb(182, 214, 255);
   border-radius: 10px;
-  background-color: rgb(246, 203, 203);
+  background: radial-gradient(
+    rgba(255, 196, 196, 0.5),
+    rgba(255, 195, 195, 0.5)
+  );
   padding: 6px;
-  margin: 4px;
+  margin: 6px;
   width: 300px;
   height: 300px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 2px 2px 2px 2px #909bff;
 }
 
-#favorites-btn {
-  font-size: 0.5em;
+button {
+  font-size: 1em;
   background-color: rgb(180, 211, 251);
-  border-radius: 10px;
-  padding: 1em;
+  border-radius: 15px;
+  padding: 10px;
+}
+button:active {
+  box-shadow: 2px 2px 2px 2px #f89a9a;
+  background: radial-gradient(rgb(180, 211, 251), rgb(182, 214, 255));
+  outline: none;
+  border: none;
+}
+button:focus {
+  outline: none;
 }
 
-#add-to-favorites {
+.has-been-favorited {
+  background-color: rgb(134, 185, 251);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 2.5em;
+}
+
+/* #add-to-favorites {
   padding: 0.5em;
   border-radius: 1em;
   background-color: #5691ff;
   color: white;
-}
+} */
 
 #description {
   font-size: 0.75em;
@@ -144,13 +167,14 @@ h1 {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin-top: -400px;
+  margin-top: -430px;
   margin-left: -30%;
   background-color: #ffdd99;
   border-radius: 10px;
   text-align: center;
   z-index: 11; /* 1px higher than the overlay layer */
   padding: 30px 0;
+  box-shadow: 2px 2px 1px 1px #a9b2ff;
 }
 
 #favoritesModal {
@@ -178,9 +202,14 @@ h1 {
 
 .text {
   padding: 0.2em;
-  font-size: 14px;
+  font-size: 16px;
 }
-
+.item-name {
+  font-weight: 800;
+  font-style: italic;
+  font-size: 18px;
+  margin-top: 0.5em;
+}
 a.btn {
   display: inline-block;
   color: #666;

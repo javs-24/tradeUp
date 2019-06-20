@@ -4,26 +4,22 @@ import * as actions from '../actions/actions';
 import Item from './Item';
 
 const mapStateToProps = store => ({
-  items: store.items.items
+  items: store.items.items,
+  userInfo: store.items.userInfo
   //map our state to props
 });
 const mapDispatchtoProps = dispatch => ({
-  fetchItems: () => dispatch(actions.fetchItems()),
-  addToFavorites: item_id => dispatch(actions.addToFavorites(item_id))
+  fetchItems: user_id => dispatch(actions.fetchItems(user_id)),
+  addToFavorites: (item, item_index) =>
+    dispatch(actions.addToFavorites(item, item_index))
 });
 
 class Catalog extends Component {
   componentDidMount() {
-    this.props.fetchItems();
+    this.props.fetchItems(this.props.userInfo.user_id);
   }
 
   render() {
-    //console.log(this.props.products);
-    // let productsArr = [];
-    // // only map products in case the fetch is successfull
-    // if (this.props.fetchProductsStatus === 'success') {
-    //   productsArr = this.props.products.map((product,i) => <div className='product' key={i}>{product.product_name}</div>);
-    // }
     return (
       <div id="catalogview">
         <Item
