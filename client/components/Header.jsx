@@ -10,7 +10,8 @@ const mapStateToProps = store => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  proceedToFavorites: () => dispatch(actions.proceedToFavorites())
+  proceedToSell: () => dispatch(actions.proceedToSell()),
+  proceedToFavorites: () => dispatch(actions.proceedToFavorites()),
 });
 
 function Header(props) {
@@ -19,8 +20,8 @@ function Header(props) {
       <div className="header-left">
         <h1>tradeUp</h1>
       </div>
-      <div className="header-right">
-        <NavBar />
+      <div className='header-right'>
+        <NavBar proceedToSell={props.proceedToSell} />
         <FavoritesBtn proceedToFavorites={props.proceedToFavorites} />
       </div>
     </header>

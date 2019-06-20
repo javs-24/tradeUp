@@ -153,3 +153,16 @@ export const login = res => ({
   type: actionTypes.LOGIN,
   payload: res
 });
+
+export const proceedToSell = () => ({
+  type: actionTypes.PROCEED_TO_SELL,
+})
+
+export const exitSell = () => ({
+  type: actionTypes.EXIT_SELL,
+})
+
+export const addItem = () => ({
+  type: actionTypes.ADD_ITEM,
+  payload: 'hi',
+})
