@@ -12,7 +12,7 @@ server.listen(PORT);
 io.on('connection', socket => {
   socket.on('addedItemFromClient', data => {
     console.log('got an added item from a client !');
-    socket.emit('addedItemFromServer', data); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
+    io.emit('addedItemFromServer', data); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
     // which will be broadcasted to all users, so that they can update their local state.
     // console.log('received message from client: ', data);
   });

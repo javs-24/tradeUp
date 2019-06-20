@@ -25,10 +25,6 @@ class AddItemModal extends React.Component {
     super(props);
     this.fileInput = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
-    socket.on('addedItemFromServer', () => {
-      console.log('SERVER TOLD ME THAT AN ITEM WAS ADDED');
-      this.props.fetchItems(this.props.userInfo.user_id);
-    });
   }
 
   handleSubmit(e) {

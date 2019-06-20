@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
 import Item from './Item';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3000/');
 
 const mapStateToProps = store => ({
   items: store.items.items,
@@ -16,6 +18,10 @@ const mapDispatchtoProps = dispatch => ({
 
 class Catalog extends Component {
   componentDidMount() {
+    socket.on('addedItemFromServer', () => {
+      console.log('SERVER TOLD ME THAT AN ITEM WAS ADDED');
+      this.props.fetchItems(this.props.userInfo.user_id);
+    });
     this.props.fetchItems(this.props.userInfo.user_id);
   }
 
