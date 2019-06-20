@@ -79,7 +79,7 @@ const itemsReducer = (state = initialState, action) => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }).then(res => console.log(res));
+      }).then(res => {});
       return {
         ...state,
         items: newItems,
