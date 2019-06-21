@@ -1,6 +1,11 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
-export default function CreateAccount({
+const mapStateToProps = store => ({
+  store: store.items.signedIn
+});
+
+function CreateAccount({
   createAccountToggle,
   onChange,
   handleSubmit,
@@ -8,7 +13,8 @@ export default function CreateAccount({
   lastName,
   email,
   userName,
-  password
+  password,
+  store
 }) {
   return (
     <div className="login-create-acc">
@@ -62,6 +68,9 @@ export default function CreateAccount({
         <input type="submit" value="Submit" />
       </form>
       <button onClick={createAccountToggle}>Already have an account?</button>
+      {store === false && <div>Username already exists</div>}
     </div>
   );
 }
+
+export default connect(mapStateToProps)(CreateAccount);

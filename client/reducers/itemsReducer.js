@@ -11,12 +11,14 @@ const initialState = {
   userInfo: { username: 'bob', user_id: 1 },
   onFavoritesPage: false,
   onAddItemPage: false,
+  fetchItemsStatus: "",
+  fetchFavoritesStatus: "",
+  searchBy: "",
+  logedin: "",
+  signedIn: "",
   uploadItemStatus: '',
   inChat: false,
   currentChatPeer: null,
-  fetchItemsStatus: '',
-  fetchFavoritesStatus: '',
-  searchBy: ''
 };
 
 const itemsReducer = (state = initialState, action) => {
@@ -33,13 +35,20 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.LOGIN:
       return {
         ...state,
-        userInfo: action.payload
+        userInfo: action.payload,
+        logedin: true
+      };
+    case actionTypes.INVALIDU:
+      return {
+        ...state,
+        logedin: action.payload
       };
     case actionTypes.UPDATE_ITEMS:
       return {
         ...state,
         items: action.payload
       };
+
     case actionTypes.SEARCH_BY:
       return {
         ...state,
@@ -104,7 +113,13 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.CREATE_ACCOUNT_STORE:
       return {
         ...state,
-        userInfo: action.payload
+        userInfo: action.payload,
+        signedIn: true
+      };
+    case actionTypes.SIGNED:
+      return {
+        ...state,
+        signedIn: false
       };
 
     case actionTypes.PROCEED_TO_SELL:

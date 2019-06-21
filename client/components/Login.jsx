@@ -1,11 +1,17 @@
-import React from 'react';
+import React from "react";
+import { connect } from "react-redux";
 
-export default function Login({
+const mapStateToProps = store => ({
+  store: store.items.logedin
+});
+
+function Login({
   createAccountToggle,
   onChange,
   handleLoginSubmit,
   userName,
-  password
+  password,
+  store
 }) {
   return (
     <div className="login-create-acc">
@@ -34,6 +40,9 @@ export default function Login({
       <button onClick={createAccountToggle}>
         u can create an account if u click this button
       </button>
+      {store === false && <div>Invalid Username</div>}
     </div>
   );
 }
+
+export default connect(mapStateToProps)(Login);
