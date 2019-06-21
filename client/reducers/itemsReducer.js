@@ -11,6 +11,7 @@ const initialState = {
   userInfo: { username: 'bob', user_id: 1 },
   onFavoritesPage: false,
   onAddItemPage: false,
+  uploadItemStatus: '',
   fetchItemsStatus: '',
   fetchFavoritesStatus: '',
   searchBy: ''
@@ -79,7 +80,7 @@ const itemsReducer = (state = initialState, action) => {
         headers: {
           'Content-Type': 'application/json'
         }
-      }).then(res => {});
+      }).then(res => { });
       return {
         ...state,
         items: newItems,
@@ -113,11 +114,25 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.EXIT_SELL:
       return {
         ...state,
-        onAddItemPage: false
+        onAddItemPage: false,
+        uploadItemStatus: ''
+
       };
 
     case actionTypes.ADD_ITEM:
     //not yet finished...
+
+    case actionTypes.CLEAR_FORM:
+      return {
+        ...state,
+        uploadItemStatus: 'pending',
+        formControls: {
+          itemName: '',
+          description: ''
+        }
+      };
+
+
     default:
       return state;
   }

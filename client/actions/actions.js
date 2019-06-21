@@ -166,3 +166,7 @@ export const addItem = () => ({
   type: actionTypes.ADD_ITEM,
   payload: 'hi',
 })
+
+export const clearForm = () => ({
+  type: actionTypes.CLEAR_FORM
+})

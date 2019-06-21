@@ -11,13 +11,15 @@ const socket = io.connect('http://localhost:3000/');
 
 const mapStateToProps = store => ({
   formControls: store.items.formControls,
-  userInfo: store.items.userInfo
+  userInfo: store.items.userInfo,
+  uploadItemStatus: store.items.uploadItemStatus
 });
 
 const mapDispatchToProps = dispatch => ({
   formOnChange: event => dispatch(actions.formOnChange(event)),
   exitSell: () => dispatch(actions.exitSell()),
-  fetchItems: user_id => dispatch(actions.fetchItems(user_id))
+  fetchItems: user_id => dispatch(actions.fetchItems(user_id)),
+  clearForm: () => dispatch(actions.clearForm()),
 });
 
 class AddItemModal extends React.Component {
@@ -33,6 +35,9 @@ class AddItemModal extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
+    //clears the form when submitted
+    this.props.clearForm();
 
     console.log('pressed button !');
     let formData = new FormData();
@@ -76,6 +81,7 @@ class AddItemModal extends React.Component {
             <div id="itemNameInput" className="inputField">
               Item:
               <input
+                type="text"
                 name="itemName"
                 placeholder="itemName"
                 value={this.props.formControls.itemName}
@@ -85,6 +91,7 @@ class AddItemModal extends React.Component {
             <div className="inputField">
               Description:
               <input
+                type='text'
                 name="description"
                 placeholder="description"
                 value={this.props.formControls.description}
@@ -95,6 +102,8 @@ class AddItemModal extends React.Component {
             <input type="file" ref={this.fileInput} />
 
             <input type="submit" />
+            {(this.props.uploadItemStatus == 'pending') && <img src="/static/loading.svg" alt="" width="300" height="300" />}
+            {(this.props.uploadItemStatus === 'success') && <h1>success!</h1>}
           </form>
         </div>
       </div>

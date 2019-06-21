@@ -14,6 +14,7 @@ const actionTypes = {
   PROCEED_TO_SELL: "PROCEED_TO_SELL",
   EXIT_SELL: "EXIT_SELL",
   ADD_ITEM: "ADD_ITEM",
+  CLEAR_FORM: "CLEAR_FORM",
 };
 
 export default actionTypes;
