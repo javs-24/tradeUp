@@ -13,7 +13,9 @@ const mapStateToProps = store => ({
 const mapDispatchtoProps = dispatch => ({
   fetchItems: user_id => dispatch(actions.fetchItems(user_id)),
   addToFavorites: (item, item_index) =>
-    dispatch(actions.addToFavorites(item, item_index))
+    dispatch(actions.addToFavorites(item, item_index)),
+  chatWithItemOwner: item_owner_id =>
+    dispatch(actions.chatWithItemOwner(item_owner_id))
 });
 
 class Catalog extends Component {
@@ -31,6 +33,7 @@ class Catalog extends Component {
         <Item
           addToFavorites={this.props.addToFavorites}
           items={this.props.items}
+          chatWithItemOwner={this.props.chatWithItemOwner}
         />
       </div>
     );

@@ -193,13 +193,19 @@ input[type='email']:focus {
   outline: none;
 }
 
-input[type='submit']:active {
+input[type='submit']:active,
+input[type='file']:active {
   box-shadow: 2px 2px 2px 2px #f89a9a;
   background: radial-gradient(rgb(180, 211, 251), rgb(182, 214, 255));
   outline: none;
 }
-
-input[type='submit']:focus {
+input[type='file'] {
+  background: #f89a9a;
+  margin: 10px;
+  color: white;
+}
+input[type='submit']:focus,
+input[type='file']:focus {
   outline: none;
 }
 
@@ -214,11 +220,11 @@ button:focus {
 }
 
 .has-been-favorited {
-  background-color: rgb(134, 185, 251);
+  background-color: rgb(180, 211, 251);
   border-radius: 10px;
   padding: 10px;
-  margin-top: 10px;
-  font-size: 2.5em;
+  margin-top: 3px;
+  font-size: 2em;
 }
 
 /* #add-to-favorites {
@@ -335,4 +341,38 @@ a.btn.btn-blue:hover {
 a.btn.btn-blue:active {
   background-color: #3c677b;
   border-color: rgba(0, 0, 0, 0.9);
+}
+
+.chat-wrapper {
+  /* height: 200px;
+  width: 100px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 80px;
+  position: absolute;
+  bottom: 0px;
+  border: 5px solid #909bff;
+  border-radius: 4px;
+  border-bottom-style: none;
+}
+.messages {
+  height: 200px;
+  width: 200px;
+  padding: 4px;
+  background: #ffd175;
+}
+.message {
+  background: #6990fd;
+  padding: 5px;
+  margin: 2px;
+  color: white;
+  border-radius: 10px;
+}
+.enter-message {
+  height: 50px;
+  width: 200px;
+  padding: 10px;
+  background: #a9b2ff;
 }

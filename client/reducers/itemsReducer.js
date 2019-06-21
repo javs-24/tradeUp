@@ -11,6 +11,8 @@ const initialState = {
   userInfo: { username: 'bob', user_id: 1 },
   onFavoritesPage: false,
   onAddItemPage: false,
+  inChat: false,
+  currentChatPeer: null,
   fetchItemsStatus: '',
   fetchFavoritesStatus: '',
   searchBy: ''
@@ -116,8 +118,12 @@ const itemsReducer = (state = initialState, action) => {
         onAddItemPage: false
       };
 
-    case actionTypes.ADD_ITEM:
-    //not yet finished...
+    case actionTypes.CHAT_WITH_ITEM_OWNER:
+      return {
+        ...state,
+        inChat: true,
+        currentChatPeer: action.payload
+      };
     default:
       return state;
   }

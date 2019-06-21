@@ -155,14 +155,19 @@ export const login = res => ({
 });
 
 export const proceedToSell = () => ({
-  type: actionTypes.PROCEED_TO_SELL,
-})
+  type: actionTypes.PROCEED_TO_SELL
+});
 
 export const exitSell = () => ({
-  type: actionTypes.EXIT_SELL,
-})
+  type: actionTypes.EXIT_SELL
+});
 
 export const addItem = () => ({
   type: actionTypes.ADD_ITEM,
-  payload: 'hi',
-})
+  payload: 'hi'
+});
+
+export const chatWithItemOwner = item_owner_id => ({
+  type: actionTypes.CHAT_WITH_ITEM_OWNER,
+  payload: item_owner_id
+});

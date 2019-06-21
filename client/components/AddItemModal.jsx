@@ -70,7 +70,6 @@ class AddItemModal extends React.Component {
           <button onClick={this.props.exitSell}>EXIT</button>
           <form onSubmit={this.handleSubmit}>
             <div id="itemNameInput" className="inputField">
-              Item:
               <input
                 name="itemName"
                 placeholder="itemName"
@@ -79,7 +78,6 @@ class AddItemModal extends React.Component {
               />
             </div>
             <div className="inputField">
-              Description:
               <input
                 name="description"
                 placeholder="description"
@@ -87,9 +85,7 @@ class AddItemModal extends React.Component {
                 onChange={this.props.formOnChange}
               />
             </div>
-
-            <input type="file" ref={this.fileInput} />
-
+            <input type="file" name="grab a file dood" ref={this.fileInput} />
             <input type="submit" />
           </form>
         </div>

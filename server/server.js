@@ -17,6 +17,13 @@ io.on('connection', socket => {
     // console.log('received message from client: ', data);
   });
 
+  socket.on('message', msg => {
+    console.log('got a msg from a client !');
+    io.emit('message', msg); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
+    // which will be broadcasted to all users, so that they can update their local state.
+    // console.log('received message from client: ', data);
+  });
+
   socket.on('disconnect', function() {
     io.emit('user disconnected');
   });
