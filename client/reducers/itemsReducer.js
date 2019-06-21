@@ -1,31 +1,34 @@
-import actionTypes from "../constants/actionTypes";
+import actionTypes from '../constants/actionTypes';
 
 const initialState = {
   items: [],
   favorites: [],
   formControls: {
-    itemName: "test_item",
-    userID: "test_user",
-    description: "test_descript"
+    itemName: '',
+    userID: '',
+    description: ''
   },
-  userInfo: { username: "bob", user_id: 1 },
+  userInfo: { username: 'bob', user_id: 1 },
   onFavoritesPage: false,
   onAddItemPage: false,
   fetchItemsStatus: "",
   fetchFavoritesStatus: "",
   searchBy: "",
   logedin: "",
-  signedIn: ""
+  signedIn: "",
+  uploadItemStatus: '',
+  inChat: false,
+  currentChatPeer: null,
 };
 
 const itemsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.REQUEST_ITEMS:
-      return { ...state, fetchItemsStatus: "pending" };
+      return { ...state, fetchItemsStatus: 'pending' };
     case actionTypes.RECEIVE_ITEMS:
       return {
         ...state,
-        fetchItemsStatus: "success",
+        fetchItemsStatus: 'success',
         items: action.payload[0],
         favorites: action.payload[1]
       };
@@ -59,7 +62,7 @@ const itemsReducer = (state = initialState, action) => {
     case actionTypes.REQUEST_ITEMS_FAILURE:
       return {
         ...state,
-        fetchItemsStatus: "failure",
+        fetchItemsStatus: 'failure',
         fetchItemsError: action.payload
       };
     case actionTypes.PROCEED_TO_FAVORITES:
@@ -79,16 +82,16 @@ const itemsReducer = (state = initialState, action) => {
       action.payload.item.favoritedByUser = true;
       newItems[action.payload.item_index].favoritedByUser = true;
       newFaves.push(action.payload.item);
-      fetch("/api/favorites", {
-        method: "POST",
+      fetch('/api/favorites', {
+        method: 'POST',
         body: JSON.stringify({
           user_id: state.userInfo.user_id,
           item_id: action.payload.item.item_id
         }),
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         }
-      }).then(res => console.log(res));
+      }).then(res => { });
       return {
         ...state,
         items: newItems,
@@ -117,6 +120,41 @@ const itemsReducer = (state = initialState, action) => {
       return {
         ...state,
         signedIn: false
+      };
+
+    case actionTypes.PROCEED_TO_SELL:
+      return {
+        ...state,
+        onAddItemPage: true
+      };
+
+    case actionTypes.EXIT_SELL:
+      return {
+        ...state,
+        onAddItemPage: false,
+        uploadItemStatus: ''
+
+      };
+
+    case actionTypes.ADD_ITEM:
+    //not yet finished...
+
+    case actionTypes.CLEAR_FORM:
+      return {
+        ...state,
+        uploadItemStatus: 'pending',
+        formControls: {
+          itemName: '',
+          description: ''
+        }
+      };
+
+
+    case actionTypes.CHAT_WITH_ITEM_OWNER:
+      return {
+        ...state,
+        inChat: true,
+        currentChatPeer: action.payload
       };
 
     default:

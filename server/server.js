@@ -10,14 +10,18 @@ var io = require('socket.io')(server);
 server.listen(PORT);
 
 io.on('connection', socket => {
-  socket.on('message', msgData => {
-    socket.emit('addedItem', {
-      user_id: 1,
-      description: 'dope',
-      pic_url: '/static/2.jpg'
-    }); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
+  socket.on('addedItemFromClient', data => {
+    console.log('got an added item from a client !');
+    io.emit('addedItemFromServer', data); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
     // which will be broadcasted to all users, so that they can update their local state.
-    console.log('received message from client: ', msgData);
+    // console.log('received message from client: ', data);
+  });
+
+  socket.on('message', msg => {
+    console.log('got a msg from a client !');
+    io.emit('message', msg); // when the item is added to the DB by any user, an 'addedItem' message is emiited,
+    // which will be broadcasted to all users, so that they can update their local state.
+    // console.log('received message from client: ', data);
   });
 
   socket.on('disconnect', function() {

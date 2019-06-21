@@ -101,9 +101,6 @@ export const createAccount = userInfo => dispatch => {
     else return dispatch(signed())
     })
     .catch(err => console.error(err));
-
-  // used to check route without async from above
-  // return dispatch(createAccountStore(userInfo.userName));
 };
 
 export const createAccountStore = res => ({
@@ -183,4 +180,26 @@ export const invalidU = () => ({
 export const login = res => ({
   type: actionTypes.LOGIN,
   payload: res
+});
+
+export const proceedToSell = () => ({
+  type: actionTypes.PROCEED_TO_SELL
+});
+
+export const exitSell = () => ({
+  type: actionTypes.EXIT_SELL
+});
+
+export const addItem = () => ({
+  type: actionTypes.ADD_ITEM,
+  payload: 'hi',
+});
+
+export const clearForm = () => ({
+  type: actionTypes.CLEAR_FORM
+});
+
+export const chatWithItemOwner = item_owner_id => ({
+  type: actionTypes.CHAT_WITH_ITEM_OWNER,
+  payload: item_owner_id
 });

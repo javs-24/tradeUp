@@ -1,9 +1,12 @@
 import React from "react";
 import Search from "./Searchbar";
 
-function NavBar() {
+
+
+function NavBar({ proceedToSell }) {
   return (
-    <ul className="navbar">
+    <ul className='navbar'>
+      <li><button onClick={proceedToSell}>Sell</button></li>
       <Search />
     </ul>
   );

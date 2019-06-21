@@ -4,9 +4,13 @@ import MainDisplay from './MainDisplay';
 import Footer from './Footer';
 import FavoritesModal from './FavoritesModal';
 import AddItemModal from './AddItemModal';
+import Chat from './Chat';
 
-export default function MainContainer({ onFavoritesPage, onAddItemPage, userInfo }) {
-  console.log('redux circle test', userInfo)
+export default function MainContainer({
+  onFavoritesPage,
+  onAddItemPage,
+  inChat
+}) {
   return (
     <div>
       <Header />
@@ -14,6 +18,7 @@ export default function MainContainer({ onFavoritesPage, onAddItemPage, userInfo
       <Footer />
       {onFavoritesPage && <FavoritesModal />}
       {onAddItemPage && <AddItemModal />}
+      {inChat && <Chat />}
     </div>
   );
 }
