@@ -6,8 +6,16 @@ function Item(props) {
   itemsArr = props.items.map((item, i) => (
     <div className="item" key={i}>
       <img src={`${item.pic_url}`} width="45%" height="45%" />
-      <div className="text item-name">{item.item_name} </div>
+      <div className="text item-name">
+        {`${item.user_id} has `}
+        {item.item_name}
+      </div>
       <div className="text">{item.description}</div>
+      <button
+        id="chat-with-item-owner"
+        onClick={() => props.chatWithItemOwner(item.user_id)}>
+        chat with item owner
+      </button>
       {item.favoritedByUser ? (
         <div className="has-been-favorited">😻</div>
       ) : (

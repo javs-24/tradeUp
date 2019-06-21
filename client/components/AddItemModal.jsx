@@ -27,10 +27,6 @@ class AddItemModal extends React.Component {
     super(props);
     this.fileInput = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
-    socket.on('addedItemFromServer', () => {
-      console.log('SERVER TOLD ME THAT AN ITEM WAS ADDED');
-      this.props.fetchItems(this.props.userInfo.user_id);
-    });
   }
 
   handleSubmit(e) {
@@ -79,7 +75,6 @@ class AddItemModal extends React.Component {
           <button onClick={this.props.exitSell}>EXIT</button>
           <form onSubmit={this.handleSubmit}>
             <div id="itemNameInput" className="inputField">
-              Item:
               <input
                 type="text"
                 name="itemName"
@@ -89,7 +84,6 @@ class AddItemModal extends React.Component {
               />
             </div>
             <div className="inputField">
-              Description:
               <input
                 type='text'
                 name="description"
@@ -98,9 +92,7 @@ class AddItemModal extends React.Component {
                 onChange={this.props.formOnChange}
               />
             </div>
-
-            <input type="file" ref={this.fileInput} />
-
+            <input type="file" name="grab a file dood" ref={this.fileInput} />
             <input type="submit" />
             {(this.props.uploadItemStatus == 'pending') && <img src="/static/loading.svg" alt="" width="300" height="300" />}
             {(this.props.uploadItemStatus === 'success') && <h1>success!</h1>}

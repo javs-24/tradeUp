@@ -4,11 +4,12 @@ import MainDisplay from './MainDisplay';
 import Footer from './Footer';
 import FavoritesModal from './FavoritesModal';
 import AddItemModal from './AddItemModal';
+import Chat from './Chat';
 
 export default function MainContainer({
   onFavoritesPage,
   onAddItemPage,
-  userInfo
+  inChat
 }) {
   return (
     <div>
@@ -17,6 +18,7 @@ export default function MainContainer({
       <Footer />
       {onFavoritesPage && <FavoritesModal />}
       {onAddItemPage && <AddItemModal />}
+      {inChat && <Chat />}
     </div>
   );
 }

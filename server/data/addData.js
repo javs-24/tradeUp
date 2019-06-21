@@ -1,5 +1,5 @@
-const { Pool } = require("pg");
-require("dotenv").config();
+const { Pool } = require('pg');
+require('dotenv').config();
 
 //repopulate the database. this is only used when we need to create new dummy data.
 // NOT PART OF A ROUTE
@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const pool = new Pool({
   user: process.env.PG_USERNAME,
-  host: "raja.db.elephantsql.com",
+  host: 'raja.db.elephantsql.com',
   database: process.env.PG_USERNAME,
   password: process.env.PG_PASSWORD,
   port: 5432,
@@ -131,6 +131,9 @@ dropTables()
   .then(insertItems)
   .then(createFavorites)
   .then(insertFavorites)
+  .then(() => {
+    console.log('reset the data!');
+  })
   .catch(err => {
     console.log(err);
   });

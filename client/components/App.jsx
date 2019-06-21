@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 const mapStateToProps = store => ({
   onAddItemPage: store.items.onAddItemPage,
   onFavoritesPage: store.items.onFavoritesPage,
+  inChat: store.items.inChat,
   userInfo: store.items.userInfo
 });
 

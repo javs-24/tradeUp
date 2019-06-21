@@ -12,6 +12,8 @@ const initialState = {
   onFavoritesPage: false,
   onAddItemPage: false,
   uploadItemStatus: '',
+  inChat: false,
+  currentChatPeer: null,
   fetchItemsStatus: '',
   fetchFavoritesStatus: '',
   searchBy: ''
@@ -132,6 +134,13 @@ const itemsReducer = (state = initialState, action) => {
         }
       };
 
+
+    case actionTypes.CHAT_WITH_ITEM_OWNER:
+      return {
+        ...state,
+        inChat: true,
+        currentChatPeer: action.payload
+      };
 
     default:
       return state;
