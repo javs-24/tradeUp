@@ -362,6 +362,7 @@ a.btn.btn-blue:active {
   width: 200px;
   padding: 4px;
   background: #ffd175;
+  overflow: auto;
 }
 .message {
   background: #6990fd;
