@@ -164,7 +164,11 @@ export const exitSell = () => ({
 
 export const addItem = () => ({
   type: actionTypes.ADD_ITEM,
-  payload: 'hi'
+  payload: 'hi',
+});
+
+export const clearForm = () => ({
+  type: actionTypes.CLEAR_FORM
 });
 
 export const chatWithItemOwner = item_owner_id => ({
