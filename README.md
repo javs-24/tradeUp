@@ -1,5 +1,16 @@
 # tradeUp
-Non-Commercialized Online Trade Marketplace
+
+tradeUp is a Non-Commercialized Online Trade Marketplace that allows users to submit items for trading.
+
+## How It Works
+
+* Users are able to sign in/up in login page
+
+* Users are able to submit an item to be displayed to sell
+
+* Users are able to favorite items and place them into a cart
+
+* Users are able to chat globaly with other users
 
 <p align="center">
   <img src="https://s3.amazonaws.com/poly-screenshots.angel.co/Project/2d/1015572/d17fcbf0ce0e613269ccfb7cada44f23-original.png" >
