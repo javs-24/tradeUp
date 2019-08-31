@@ -1,5 +1,5 @@
-# jigglypuff
-snickers eCommerce
+# tradeUp
+Non-Commercialized Online Trade Marketplace
 
 # Style guide
 Consistent indentation
