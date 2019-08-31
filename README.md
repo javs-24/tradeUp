@@ -1,7 +1,11 @@
 # tradeUp
 Non-Commercialized Online Trade Marketplace
 
-# Style guide
+<p align="center">
+  <img src="https://s3.amazonaws.com/poly-screenshots.angel.co/Project/2d/1015572/d17fcbf0ce0e613269ccfb7cada44f23-original.png" >
+</p>
+
+### Style guide
 Consistent indentation
 Always close braces on their own line
 Good naming of variables and functions
@@ -14,7 +18,7 @@ Add comments, preferably on docstrings
     * @param {string} adsf username
     */
 
-# Git Rules
+### Git Rules
 Always make clear what file you're working on
 Small commits
 Good descriptive msg (but short!)
@@ -28,7 +32,7 @@ If working on a new feature then create a new branch
 
 Everyone should have its code reviewed before getting accepted, even the git master
 
-# Communication
+### Communication
 
 Standups:
   Before starting the day: 10-15'
